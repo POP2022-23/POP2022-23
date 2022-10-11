@@ -23,8 +23,8 @@ Systemem mObywatel, CEPIK.
 - Artur Prasula
 - Michał Wójcik
 - Katarzyna Grygorowicz
-- Grenda Jakub
-- Hołubowicz Kacper
+- Jakub Grenda 
+- Kacper Hołubowicz
 
 ### 2.3. DB:
 - Michał Wójcik
