@@ -31,3 +31,13 @@
     font-size: 12px;
     line-height: 16px;
 }
+
+.pin-icon {
+    font-size: 2rem;
+    color: black;
+}
+
+.pin-text {
+    color: black;
+    font-size: 1.3em;
+}

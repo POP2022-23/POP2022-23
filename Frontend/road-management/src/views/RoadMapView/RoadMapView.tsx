@@ -1,6 +1,6 @@
 import React from 'react';
 import "./roadMapView.css";
-import Map from "./Map"
+import Map from "../RoadMapView/Map/Map"
 import {Button, Container} from "react-bootstrap";
 
 function RoadMapView(){
