@@ -1,0 +1,33 @@
+.padded-container {
+    min-height: 480px;
+    min-width: 720px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    user-select: none;
+    background: #f6f6f6;
+}
+
+.map-container {
+    min-height: 480px;
+    min-width: 720px;
+    padding: 10px;
+    background: #282852;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.return-button {
+    width: 100px;
+    margin: 10px auto;
+    background: #C4C5D0;
+    border-radius: 4px;
+
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
