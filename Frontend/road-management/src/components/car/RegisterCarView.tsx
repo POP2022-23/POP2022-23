@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import RegisterCarForm from './RegisterCarForm';
 
+interface IRegisterCarWindow {
+  clickOnAddNewCarButton: (result: boolean) => void;
+}
+
+interface ICarRegister {
+  checkNewCar: (id: string) => void;
+}
+
 const RegisterCarView = () => {
   const [infoMessage, setInfoMessage] = useState('');
 
   // Kontrola danego widoku
-  interface IRegisterCarWindow {
-    clickOnAddNewCarButton: (result: boolean) => void;
-  }
-
   class RegisterCarDispatcher implements IRegisterCarWindow {
     clickOnAddNewCarButton(result: boolean): void {
       console.log('Kliknięto na zarejestruj nowy pojazd - zmień dany widok w zależności.');
@@ -20,15 +24,12 @@ const RegisterCarView = () => {
   const registerCarDispatcher = new RegisterCarDispatcher();
 
   // Logika
-  interface ICarRegister {
-    checkNewCar: (id: string) => void;
-  }
-
   class RegisterCarPresenter implements ICarRegister {
     checkNewCar(id: string): void {
       console.log('checkNewCar: ', id);
 
-      const result = true; // Udało się zarejestrować pojazd
+      // Kontakt z API
+      const result = true;
 
       registerCarDispatcher.clickOnAddNewCarButton(result);
     }
