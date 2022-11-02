@@ -25,13 +25,13 @@ DROP TYPE car_type CASCADE
 CREATE TYPE user_role AS ENUM ('USER', 'POLICE_OFFICER', 'ADMIN','EMPLOYEE','CAR_OWNER')
 ;
 
-CREATE TYPE car_type AS ENUM ('MINIVAN', 'PICKUP_TRUCK', 'SEDAN','HATCHBACK')
+CREATE TYPE car_type AS ENUM ('MINIVAN', 'PICKUP', 'SEDAN','HATCHBACK')
 ;
 
 --  Create Tables 
 CREATE TABLE road_node
 (
-    id      integer        NOT NULL,
+    id      SERIAL,
     road_id integer        NOT NULL,
     x       decimal(10, 2) NOT NULL,
     y       decimal(10, 2) NOT NULL
@@ -40,9 +40,9 @@ CREATE TABLE road_node
 
 CREATE TABLE road
 (
-    id                 integer        NOT NULL,
-    start_road_node_id integer        NOT NULL,
-    end_road_node_id   integer        NOT NULL,
+    id                 SERIAL,
+    start_road_node_id integer        ,
+    end_road_node_id   integer        ,
     length             decimal(10, 2) NOT NULL,
     name               varchar(100)   NOT NULL
 )
@@ -50,7 +50,7 @@ CREATE TABLE road
 
 CREATE TABLE car_data
 (
-    id              integer NOT NULL,
+    id              SERIAL,
     car_id          integer NOT NULL,
     engine_capacity decimal(10, 2),
     height          decimal(10, 2),
@@ -66,7 +66,7 @@ CREATE TABLE car_data
 
 CREATE TABLE car
 (
-    id                  integer NOT NULL,
+    id                  SERIAL,
     user_id             integer NOT NULL,
     registration_number char(8) NOT NULL
 )
@@ -74,7 +74,7 @@ CREATE TABLE car
 
 CREATE TABLE app_user
 (
-    id           integer     NOT NULL,
+    id           SERIAL,
     user_role    user_role   NOT NULL,
     email        varchar(50) NOT NULL,
     first_name   varchar(50) NOT NULL,
