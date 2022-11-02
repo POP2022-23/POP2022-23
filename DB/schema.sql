@@ -17,10 +17,16 @@ DROP TABLE car CASCADE
 ;
 DROP TABLE app_user CASCADE
 ;
+DROP TYPE user_role CASCADE
+;
+DROP TYPE car_type CASCADE
+;
 
-DROP TYPE user_role CASCADE;
+CREATE TYPE user_role AS ENUM ('USER', 'POLICE_OFFICER', 'ADMIN','EMPLOYEE','CAR_OWNER')
+;
 
-CREATE TYPE user_role AS ENUM ('USER', 'POLICE_OFFICER', 'ADMIN','EMPLOYEE','CAR_OWNER');
+CREATE TYPE car_type AS ENUM ('MINIVAN', 'PICKUP_TRUCK', 'SEDAN','HATCHBACK')
+;
 
 --  Create Tables 
 CREATE TABLE road_node
@@ -44,13 +50,14 @@ CREATE TABLE road
 
 CREATE TABLE car_data
 (
+    id              integer NOT NULL,
     car_id          integer NOT NULL,
     engine_capacity decimal(10, 2),
     height          decimal(10, 2),
     length          decimal(10, 2),
     model           varchar(50),
     production_year integer,
-    type            text,
+    type            car_type ,
     weight          decimal(10, 2),
     width           decimal(10, 2),
     make            varchar(50)
@@ -99,6 +106,11 @@ ALTER TABLE road_node
 
 ALTER TABLE road
     ADD CONSTRAINT PK_road
+        PRIMARY KEY (id)
+;
+
+ALTER TABLE car_data
+    ADD CONSTRAINT PK_car_data
         PRIMARY KEY (id)
 ;
 
