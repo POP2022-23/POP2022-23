@@ -1,6 +1,6 @@
-package com.pop.db.repository;
+package com.pop.user;
 
-import com.pop.db.domain.User;
+import com.pop.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserJpaRepository extends JpaRepository<User, Long> {

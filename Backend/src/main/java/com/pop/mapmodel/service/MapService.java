@@ -1,7 +1,7 @@
 package com.pop.mapmodel.service;
 
-import com.pop.db.domain.Road;
-import com.pop.db.repository.RoadJpaRepository;
+import com.pop.mapmodel.domain.Road;
+import com.pop.mapmodel.repository.RoadJpaRepository;
 import com.pop.mapmodel.dto.RoadDataDTO;
 import com.pop.mapmodel.service.mapper.RoadDataMapper;
 import com.pop.mapmodel.service.validator.RoadDataValidator;

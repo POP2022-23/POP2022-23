@@ -1,5 +1,6 @@
-package com.pop.db.domain;
+package com.pop.carmodel;
 
+import com.pop.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.pop.mapmodel.service.mapper;
 
-import com.pop.db.domain.Road;
+import com.pop.mapmodel.domain.Road;
 import com.pop.mapmodel.dto.RoadDataDTO;
 import org.springframework.stereotype.Service;
 

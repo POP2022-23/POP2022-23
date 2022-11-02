@@ -1,4 +1,4 @@
-package com.pop.CarModel;
+package com.pop.carmodel;
 
 public class CarDetailsDTO {
 }

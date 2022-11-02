@@ -1,14 +1,12 @@
 package com.pop.db;
 
-import com.pop.db.domain.Road;
-import com.pop.db.domain.RoadNode;
-import com.pop.db.repository.RoadJpaRepository;
+import com.pop.mapmodel.domain.Road;
+import com.pop.mapmodel.domain.RoadNode;
+import com.pop.mapmodel.repository.RoadJpaRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;

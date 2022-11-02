@@ -1,4 +1,4 @@
-package com.pop.CarModel;
+package com.pop.carmodel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

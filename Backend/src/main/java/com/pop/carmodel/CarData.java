@@ -1,4 +1,4 @@
-package com.pop.db.domain;
+package com.pop.carmodel;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

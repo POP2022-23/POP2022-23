@@ -1,4 +1,4 @@
-package com.pop.db.domain;
+package com.pop.mapmodel.domain;
 
 import lombok.NoArgsConstructor;
 

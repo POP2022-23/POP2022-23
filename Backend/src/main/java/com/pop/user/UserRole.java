@@ -1,4 +1,4 @@
-package com.pop.db.domain;
+package com.pop.user;
 
 public enum UserRole {
     USER,

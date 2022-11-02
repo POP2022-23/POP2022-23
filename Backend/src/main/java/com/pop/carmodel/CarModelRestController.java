@@ -1,4 +1,4 @@
-package com.pop.CarModel;
+package com.pop.carmodel;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,6 +1,5 @@
-package com.pop.db.domain;
+package com.pop.user;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
