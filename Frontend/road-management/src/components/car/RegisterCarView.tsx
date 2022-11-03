@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
 import RegisterCarForm from './RegisterCarForm';
 
+type CarData = {
+  registrationNumber: string;
+  vin: string;
+  engineCapacity: number;
+  height: number;
+  length: number;
+  make: string;
+  model: string;
+  productionYear: number;
+  carType: string;
+  weight: number;
+  width: number;
+};
+
 interface IRegisterCarWindow {
-  clickOnAddNewCarButton: (result: boolean) => void;
+  clickOnAddNewCarButton: (result: boolean, carData: CarData) => void;
 }
 
 interface ICarRegister {
@@ -12,12 +26,35 @@ interface ICarRegister {
 const RegisterCarView = () => {
   const [infoMessage, setInfoMessage] = useState('');
 
+  const getCarFromCEPIK = async (registrationNumber: string, vin: string) => {
+    const server = 'http://localhost:8080/cepik';
+    const registerNumberExample = 'NEL 98AM';
+    const vinExample = '2HGES267X5H581074';
+
+    try {
+      const response = await fetch(`${server}?registration=${registrationNumber}&vin=${vin}`);
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      return null;
+    }
+  };
+
   // Kontrola danego widoku
   class RegisterCarDispatcher implements IRegisterCarWindow {
-    clickOnAddNewCarButton(result: boolean): void {
-      console.log('Kliknięto na zarejestruj nowy pojazd - zmień dany widok w zależności.');
-
-      setInfoMessage(`${result ? 'Udało się!' : 'Nie udało się!'}`);
+    clickOnAddNewCarButton(result: boolean, carData: CarData): void {
+      setInfoMessage(
+        `${
+          result
+            ? `Udało się zarejestrować pojazd o wadze: ${carData.weight} kg!`
+            : 'Nie udało się zarejestrować pojazdu!'
+        }`
+      );
     }
   }
 
@@ -25,13 +62,20 @@ const RegisterCarView = () => {
 
   // Logika
   class RegisterCarPresenter implements ICarRegister {
-    checkNewCar(registrationNumber: string, vin: string): void {
-      console.log('checkNewCar: ', registrationNumber, vin);
+    async checkNewCar(registrationNumber: string, vin: string): Promise<any> {
+      // Kontakt z Cepikiem
+      const carData = await getCarFromCEPIK(registrationNumber, vin);
 
-      // Kontakt z API
-      const result = true;
+      // Kontakt z bazą danych
+      let savedToDataBase;
+      if (carData) {
+        // fetch(POST, carData) - save car to our database
+        savedToDataBase = true;
+      } else {
+        savedToDataBase = false;
+      }
 
-      registerCarDispatcher.clickOnAddNewCarButton(result);
+      registerCarDispatcher.clickOnAddNewCarButton(savedToDataBase, carData);
     }
   }
 
