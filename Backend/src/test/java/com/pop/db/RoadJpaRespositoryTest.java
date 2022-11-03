@@ -28,11 +28,11 @@ public class RoadJpaRespositoryTest {
     @Test
     public void testCreateRoad(){
         List<RoadNode> nodes = new ArrayList<>();
-        nodes.add(new RoadNode(new BigDecimal(4),new BigDecimal(4)));
-        nodes.add(new RoadNode(new BigDecimal(5),new BigDecimal(5)));
-        nodes.add(new RoadNode(new BigDecimal(6),new BigDecimal(6)));
+        nodes.add(new RoadNode(4,4));
+        nodes.add(new RoadNode(5,5));
+        nodes.add(new RoadNode(6,6));
 
-        Road r1 = new Road(nodes,new BigDecimal(120),"road 1");
+        Road r1 = new Road(nodes,120,"road 1");
 
         Road result = roadJpaRepository.save(r1);
 

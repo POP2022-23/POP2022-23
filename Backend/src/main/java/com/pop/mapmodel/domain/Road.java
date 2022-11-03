@@ -2,40 +2,36 @@ package com.pop.mapmodel.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class Road {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy="road")
-    private List<RoadNode> nodes;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "road")
+    private List<RoadNode> nodes = new ArrayList<>();
 
     @Column
-    private BigDecimal length;
+    private double length;
 
     @Column
     private String name;
 
-//    @OneToOne
-//    private RoadNode startRoadNodeId;
-//
-//    @OneToOne
-//    private RoadNode endRoadNodeId;
-
-    public Road(List<RoadNode> nodes, BigDecimal length, String name) {
+    public Road(List<RoadNode> nodes, double length, String name) {
         this.nodes = nodes;
         this.length = length;
         this.name = name;
-//        this.startRoadNodeId = nodes.get(0);
-//        this.endRoadNodeId = nodes.get(nodes.size()-1);
     }
 }

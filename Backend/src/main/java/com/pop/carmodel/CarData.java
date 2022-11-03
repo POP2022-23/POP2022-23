@@ -1,15 +1,20 @@
 package com.pop.carmodel;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 @Entity
 @Table
+@Getter
+@Setter
 public class CarData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -17,13 +22,13 @@ public class CarData {
     private Car car;
 
     @Column
-    private BigDecimal engineCapacity;
+    private double engineCapacity;
 
     @Column
-    private BigDecimal height;
+    private double height;
 
     @Column
-    private BigDecimal length;
+    private double length;
 
     @Column
     private String model;
@@ -36,12 +41,8 @@ public class CarData {
     private CarType type;
 
     @Column
-    private BigDecimal weight;
+    private double weight;
 
     @Column
-    private BigDecimal width;
-
-
-
-
+    private double width;
 }

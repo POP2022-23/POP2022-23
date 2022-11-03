@@ -1,13 +1,17 @@
 package com.pop.mapmodel.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Table
+@Table(name = "road_node")
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
 public class RoadNode {
 
     @Id
@@ -15,16 +19,16 @@ public class RoadNode {
     private Long id;
 
     @Column
-    private BigDecimal x;
+    private double x;
 
     @Column
-    private BigDecimal y;
+    private double y;
 
-    @ManyToOne
-    @JoinColumn(name="road_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "road_id")
     private Road road;
 
-    public RoadNode(BigDecimal x, BigDecimal y) {
+    public RoadNode(double x, double y) {
         this.x = x;
         this.y = y;
     }

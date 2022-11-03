@@ -7,20 +7,20 @@
 
 --  Drop Tables, Stored Procedures and Views
 
-DROP TABLE road_node CASCADE
-;
-DROP TABLE road CASCADE
-;
-DROP TABLE car_data CASCADE
-;
-DROP TABLE car CASCADE
-;
-DROP TABLE app_user CASCADE
-;
-DROP TYPE user_role CASCADE
-;
-DROP TYPE car_type CASCADE
-;
+-- DROP TABLE road_node CASCADE
+-- ;
+-- DROP TABLE road CASCADE
+-- ;
+-- DROP TABLE car_data CASCADE
+-- ;
+-- DROP TABLE car CASCADE
+-- ;
+-- DROP TABLE app_user CASCADE
+-- ;
+-- DROP TYPE user_role CASCADE
+-- ;
+-- DROP TYPE car_type CASCADE
+-- ;
 
 CREATE TYPE user_role AS ENUM ('USER', 'POLICE_OFFICER', 'ADMIN','EMPLOYEE','CAR_OWNER')
 ;
