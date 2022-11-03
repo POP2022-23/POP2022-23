@@ -6,7 +6,7 @@ interface IRegisterCarWindow {
 }
 
 interface ICarRegister {
-  checkNewCar: (id: string) => void;
+  checkNewCar: (registrationNumber: string, vin: string) => void;
 }
 
 const RegisterCarView = () => {
@@ -25,8 +25,8 @@ const RegisterCarView = () => {
 
   // Logika
   class RegisterCarPresenter implements ICarRegister {
-    checkNewCar(id: string): void {
-      console.log('checkNewCar: ', id);
+    checkNewCar(registrationNumber: string, vin: string): void {
+      console.log('checkNewCar: ', registrationNumber, vin);
 
       // Kontakt z API
       const result = true;
