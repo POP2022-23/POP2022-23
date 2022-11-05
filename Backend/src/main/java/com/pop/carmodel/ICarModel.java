@@ -1,6 +1,9 @@
 package com.pop.carmodel;
 
+import java.util.List;
+
 public interface ICarModel {
 
-    public boolean saveCar(CarDataDTO data);
+    boolean saveCar(CarDataDTO data);
+    List<CarDataDTO> getListCar(long userId);
 }

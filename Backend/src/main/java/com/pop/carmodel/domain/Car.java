@@ -1,4 +1,4 @@
-package com.pop.carmodel;
+package com.pop.carmodel.domain;
 
 import com.pop.user.User;
 import lombok.Getter;
