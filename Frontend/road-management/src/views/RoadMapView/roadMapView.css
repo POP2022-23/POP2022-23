@@ -1,16 +1,26 @@
 .padded-container {
     min-height: 480px;
-    min-width: 720px;
+    width: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 40px;
     user-select: none;
     background: #f6f6f6;
 }
 
+.vertical-container {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+}
+
+#road-dropdown {
+    margin: 0 20px;
+}
+
 .map-container {
     min-height: 480px;
-    min-width: 720px;
+    width: 720px;
     padding: 10px;
     background: #282852;
 }

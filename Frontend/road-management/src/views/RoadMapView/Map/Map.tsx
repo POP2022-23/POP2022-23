@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
-import {startLocation, mapRestriction, polylineSettings} from './MapConstants';
+import {mapRestriction, polylineSettings, startLocation} from './MapConstants';
 import {RoadDataDTO} from "../../../interfaces/map/mapInterfaces";
 
 interface IRoadMapWindow {
-    roadDTO: RoadDataDTO;
+    roadDTO: RoadDataDTO | undefined;
 }
 
 function Map({roadDTO}: IRoadMapWindow) {
     const [road, setRoad] = useState<RoadDataDTO>();
-    const [map, setMap] = React.useState<google.maps.Map | null>(null)
+    const [map, setMap] = useState<google.maps.Map | null>(null)
+    const [currentPolyline, setCurrentPolyline] = useState<google.maps.Polyline>();
+    const [currentMarkers, setCurrentMarkers] = useState<google.maps.Marker[]>();
     const {isLoaded} = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY!,
@@ -24,14 +26,25 @@ function Map({roadDTO}: IRoadMapWindow) {
     }, [])
 
     const displayMarkers = function () {
-        road?.nodes.forEach((node) => {
+        currentMarkers?.forEach(marker => {
+            marker.setMap(null);
+        })
+        
+        const markers = road?.nodes.map(node => {
             const coords = new window.google.maps.LatLng(node.latitude, node.longitude);
-            const marker = new window.google.maps.Marker({position: coords});
+            return new window.google.maps.Marker({position: coords});
+        })
+
+        setCurrentMarkers(markers);
+
+        markers?.forEach(marker => {
             marker.setMap(map);
         })
     }
 
     const displayLines = function () {
+        currentPolyline?.setMap(null);
+        
         const nodePath = road?.nodes.map((node) => {
             return new window.google.maps.LatLng(node.latitude, node.longitude);
         })
@@ -45,19 +58,22 @@ function Map({roadDTO}: IRoadMapWindow) {
             editable: true,
         });
 
+        setCurrentPolyline(polyline);
         polyline.setMap(map);
     }
 
     useEffect(() => {
-        setRoad(roadDTO);
-    }, [])
+        if (roadDTO !== undefined) {
+            setRoad(roadDTO);
+        }
+    }, [roadDTO])
 
     useEffect(() => {
         if (isLoaded && road !== undefined && map !== null) {
             displayMarkers();
             displayLines();
         }
-    }, [map])
+    }, [isLoaded, road, map])
 
     return isLoaded ? (
         <GoogleMap
