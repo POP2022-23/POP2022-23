@@ -3,7 +3,7 @@ export const startLocation = {
         lat: 52.23,
         lng: 21.05
     },
-    zoom: 10
+    zoom: 1
 }
 
 export const mapRestriction: google.maps.MapRestriction = {
@@ -13,4 +13,10 @@ export const mapRestriction: google.maps.MapRestriction = {
         south: 48.90,
         east: 24.20
     }
+}
+
+export const polylineSettings = {
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2
 }
