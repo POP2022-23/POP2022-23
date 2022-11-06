@@ -13,12 +13,7 @@ import javax.persistence.*;
 public class CarData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "car_id", referencedColumnName = "id")
-    private Car car;
 
     @Column
     private double engineCapacity;

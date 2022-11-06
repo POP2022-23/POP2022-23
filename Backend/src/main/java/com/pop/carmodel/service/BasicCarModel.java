@@ -67,7 +67,7 @@ public class BasicCarModel implements ICarModel {
                 .orElseThrow(IllegalArgumentException::new);
 
         Car car = new Car(dto.getRegistrationNumber(), carOwner, carData);
-        car.getCarData().setCar(car);
+//        car.getCarData().setCar(car);
         return car;
     }
 
