@@ -25,7 +25,7 @@ public class Car {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CarData carData;
 
     public Car(String registrationNumber, User owner, CarData carData) {

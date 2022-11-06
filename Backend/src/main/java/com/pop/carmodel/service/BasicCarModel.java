@@ -22,9 +22,10 @@ public class BasicCarModel implements ICarModel {
     @Override
     public boolean saveCar(CarDataDTO data) {
         try {
-            if(!validateCarData(data)) {
+            if (!validateCarData(data)) {
                 return false;
             }
+
             carJpaRepository.save(mapDTOToCar(data));
             return true;
         } catch (IllegalArgumentException e) {
@@ -58,19 +59,22 @@ public class BasicCarModel implements ICarModel {
         carData.setEngineCapacity(detailsDto.getEngineCapacity());
         carData.setWidth(detailsDto.getWidth());
         carData.setWeight(detailsDto.getWeight());
-        carData.setProductionYear((long)detailsDto.getProductionYear());
+        carData.setProductionYear((long) detailsDto.getProductionYear());
         //carData.setMake(detailsDto.getMake());
 
         User carOwner = userJpaRepository
                 .findById(dto.getOwnerId())
                 .orElseThrow(IllegalArgumentException::new);
 
-        return new Car(dto.getRegistrationNumber(), carOwner, carData);
+        Car car = new Car(dto.getRegistrationNumber(), carOwner, carData);
+        car.getCarData().setCar(car);
+        return car;
     }
 
     private CarDataDTO mapCarToDTO(Car entity) {
         long ownerId = entity.getOwner().getId();
         CarData details = entity.getCarData();
+
         return new CarDataDTO(ownerId, ownerId, entity.getId(), entity.getRegistrationNumber(),
                 new CarDetailsDTO(details.getEngineCapacity(), details.getHeight(), details.getLength(),
                         details.getWeight(), details.getWidth(), "", details.getModel(),

@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface CarJpaRepository extends JpaRepository<Car, Long> {
 
-    @Query("SELECT c FROM Car c WHERE c.owner_id = ?1")
+    @Query(
+            nativeQuery = true,
+            value = "SELECT c.* FROM Car AS c INNER JOIN car_data AS cd ON cd.car_id = c.id WHERE c.owner_id = ?1 "
+    )
     List<Car> findAllByOwnerId(long ownerId);
 }
-

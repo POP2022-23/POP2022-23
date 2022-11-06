@@ -3,7 +3,7 @@ INSERT INTO app_user(user_role,email,first_name,last_name,phone_number) VALUES
     ('EMPLOYEE','anna.nowak@gddkia.com','Anna','Nowak','555444333'),
     ('USER','bob.budowniczy@example.com','Bob','Budowniczy','999777888');
 
-INSERT INTO car(user_id,registration_number) VALUES
+INSERT INTO car(owner_id,registration_number) VALUES
     (1,'WA553323'),
     (1,'WA777323'),
     (3,'GD500233');

@@ -1,7 +1,7 @@
 package com.pop.carmodel.controller;
 
-import com.pop.carmodel.service.ICarModel;
 import com.pop.carmodel.dto.CarDataDTO;
+import com.pop.carmodel.service.ICarModel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
