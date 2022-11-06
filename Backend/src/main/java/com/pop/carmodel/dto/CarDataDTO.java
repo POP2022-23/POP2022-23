@@ -1,4 +1,4 @@
-package com.pop.carmodel;
+package com.pop.carmodel.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

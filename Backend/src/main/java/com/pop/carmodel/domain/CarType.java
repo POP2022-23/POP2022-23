@@ -1,4 +1,4 @@
-package com.pop.carmodel;
+package com.pop.carmodel.domain;
 
 public enum CarType {
     MINIVAN,

@@ -1,5 +1,6 @@
-package com.pop.carmodel.domain;
+package com.pop.carmodel.repository;
 
+import com.pop.carmodel.domain.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

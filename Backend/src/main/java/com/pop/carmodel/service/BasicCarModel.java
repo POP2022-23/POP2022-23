@@ -1,8 +1,10 @@
-package com.pop.carmodel;
+package com.pop.carmodel.service;
 
 import com.pop.carmodel.domain.Car;
 import com.pop.carmodel.domain.CarData;
-import com.pop.carmodel.domain.CarJpaRepository;
+import com.pop.carmodel.dto.CarDataDTO;
+import com.pop.carmodel.dto.CarDetailsDTO;
+import com.pop.carmodel.repository.CarJpaRepository;
 import com.pop.user.User;
 import com.pop.user.UserJpaRepository;
 import lombok.AllArgsConstructor;

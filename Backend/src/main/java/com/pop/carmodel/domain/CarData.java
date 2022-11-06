@@ -1,6 +1,5 @@
 package com.pop.carmodel.domain;
 
-import com.pop.carmodel.CarType;
 import lombok.Getter;
 import lombok.Setter;
 
