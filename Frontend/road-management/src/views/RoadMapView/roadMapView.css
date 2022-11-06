@@ -1,0 +1,53 @@
+.padded-container {
+    min-height: 480px;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 40px;
+    user-select: none;
+    background: #f6f6f6;
+}
+
+.vertical-container {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+}
+
+#road-dropdown {
+    margin: 0 20px;
+}
+
+.map-container {
+    min-height: 480px;
+    width: 720px;
+    padding: 10px;
+    background: #282852;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.return-button {
+    width: 100px;
+    margin: 10px auto;
+    background: #C4C5D0;
+    border-radius: 4px;
+
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.pin-icon {
+    font-size: 2rem;
+    color: black;
+}
+
+.pin-text {
+    color: black;
+    font-size: 1.3em;
+}
