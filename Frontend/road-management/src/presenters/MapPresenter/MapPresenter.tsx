@@ -4,6 +4,7 @@ import {RoadDataDTO} from "../../interfaces/map/mapInterfaces";
 
 function MapPresenter() {
     const [roadList, setRoadList] = useState<RoadDataDTO[]>(new Array<RoadDataDTO>());
+    const [selectedDto, setSelectedDto] = useState<RoadDataDTO | undefined>(undefined);
 
     useEffect(() => {
         // fetch from API
@@ -43,8 +44,22 @@ function MapPresenter() {
         setRoadList(roadListMock);
     }, []);
 
-    const showRoadMapWindow = function (): JSX.Element {
-        return roadList.length !== 0 ? <RoadMapView roadList={roadList}></RoadMapView> : <></>;
+    const showRoadMapWindow = function () {
+        return roadList.length !== 0 ?
+            <RoadMapView roadList={roadList} onReturnClick={onReturnClick} onSelect={onSelect}
+                         selectedDto={selectedDto}/> : <></>;
+    }
+
+    const onReturnClick = function () {
+        console.log("Navigating to DashboardView")
+        // Navigate to DashboardView
+    }
+
+    const onSelect = (item: string | null) => {
+        if (item !== null) {
+            const dto = roadList.find(dto => dto.id.toString() === item);
+            setSelectedDto(dto);
+        }
     }
 
     return (

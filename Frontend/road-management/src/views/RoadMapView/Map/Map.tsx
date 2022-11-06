@@ -3,11 +3,11 @@ import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 import {mapRestriction, polylineSettings, startLocation} from './MapConstants';
 import {RoadDataDTO} from "../../../interfaces/map/mapInterfaces";
 
-interface IRoadMapWindow {
+interface IMapComponent {
     roadDTO: RoadDataDTO | undefined;
 }
 
-function Map({roadDTO}: IRoadMapWindow) {
+function Map({roadDTO}: IMapComponent) {
     const [road, setRoad] = useState<RoadDataDTO>();
     const [map, setMap] = useState<google.maps.Map | null>(null)
     const [currentPolyline, setCurrentPolyline] = useState<google.maps.Polyline>();
