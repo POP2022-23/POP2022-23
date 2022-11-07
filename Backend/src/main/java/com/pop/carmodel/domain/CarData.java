@@ -15,6 +15,11 @@ public class CarData {
     @Id
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "id")
+    private Car car;
+
     @Column
     private double engineCapacity;
 
