@@ -60,14 +60,14 @@ public class BasicCarModel implements ICarModel {
         carData.setWidth(detailsDto.getWidth());
         carData.setWeight(detailsDto.getWeight());
         carData.setProductionYear((long) detailsDto.getProductionYear());
-        //carData.setMake(detailsDto.getMake());
+        carData.setMake(detailsDto.getMake());
 
         User carOwner = userJpaRepository
                 .findById(dto.getOwnerId())
                 .orElseThrow(IllegalArgumentException::new);
 
         Car car = new Car(dto.getRegistrationNumber(), carOwner, carData);
-//        car.getCarData().setCar(car);
+        car.getCarData().setCar(car);
         return car;
     }
 
@@ -77,7 +77,7 @@ public class BasicCarModel implements ICarModel {
 
         return new CarDataDTO(ownerId, ownerId, entity.getId(), entity.getRegistrationNumber(),
                 new CarDetailsDTO(details.getEngineCapacity(), details.getHeight(), details.getLength(),
-                        details.getWeight(), details.getWidth(), "", details.getModel(),
+                        details.getWeight(), details.getWidth(), details.getMake(), details.getModel(),
                         details.getProductionYear().intValue(), details.getType()
                 )
         );
