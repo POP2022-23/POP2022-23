@@ -30,6 +30,9 @@ public class CarData {
     private double length;
 
     @Column
+    private String make;
+
+    @Column
     private String model;
 
     @Column
