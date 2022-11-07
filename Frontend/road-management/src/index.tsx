@@ -5,9 +5,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import AddRoadPresenter from "./presenters/AddRoadPresenter/AddRoadPresenter";
 import MapPresenter from "./presenters/MapPresenter/MapPresenter";
+import DashboardView from "./views/Dashboard/Dashboard";
+import RegisterCarView from "./views/RegisterCar/RegisterCarView";
 
 const router = createBrowserRouter([
-  { path: "/", element: <MapPresenter /> },
+  { path: "/", element: <DashboardView /> },
+  { path: "/registerCar", element: <RegisterCarView /> },
+  { path: "/map", element: <MapPresenter /> },
   { path: "/addRoad", element: <AddRoadPresenter /> },
 ]);
 
