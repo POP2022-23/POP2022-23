@@ -2,8 +2,10 @@ package com.pop.carmodel.service;
 
 import com.pop.carmodel.domain.Car;
 import com.pop.carmodel.domain.CarData;
+import com.pop.carmodel.dto.AddCarDTO;
 import com.pop.carmodel.dto.CarDataDTO;
 import com.pop.carmodel.dto.CarDetailsDTO;
+import com.pop.carmodel.dto.CepikCarDTO;
 import com.pop.carmodel.repository.CarJpaRepository;
 import com.pop.user.User;
 import com.pop.user.UserJpaRepository;
@@ -16,17 +18,18 @@ import java.util.List;
 @AllArgsConstructor
 public class BasicCarModel implements ICarModel {
 
+    private ICepik cepikService;
     private CarJpaRepository carJpaRepository;
     private UserJpaRepository userJpaRepository;
 
     @Override
-    public boolean saveCar(CarDataDTO data) {
+    public boolean saveCar(AddCarDTO data) {
         try {
             if (!validateCarData(data)) {
                 return false;
             }
-
-            carJpaRepository.save(mapDTOToCar(data));
+            CepikCarDTO cepikCar = cepikService.getCarFromCepik(data.getRegistrationNumber(), data.getVin());
+            carJpaRepository.save(mapDTOToCar(new CarDataDTO(data.getOwnerId(), cepikCar)));
             return true;
         } catch (IllegalArgumentException e) {
             return false;
@@ -39,14 +42,9 @@ public class BasicCarModel implements ICarModel {
         return cars.stream().map(this::mapCarToDTO).toList();
     }
 
-    private boolean validateCarData(CarDataDTO carData) {
-        CarDetailsDTO details = carData.getDetails();
-        return details != null && carData.getOwnerId() > 0 && !carData.getRegistrationNumber().isEmpty()
-                && !details.getMake().isEmpty() && !details.getModel().isEmpty()
-                && !(details.getLength() <= 0) && !(details.getHeight() <= 0)
-                && !(details.getWeight() <= 0) && !(details.getWidth() <= 0)
-                && details.getType() != null && !(details.getEngineCapacity() <= 0)
-                && details.getProductionYear() > 1885;
+    private boolean validateCarData(AddCarDTO carData) {
+        return carData.getRegistrationNumber().length() == 8 &&
+                carData.getVin().length() == 17;
     }
 
     private Car mapDTOToCar(CarDataDTO dto) {
