@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddCarDTO {
-    private int ownerId;
+    private long ownerId;
     private String registrationNumber;
     private String vin;
 }
