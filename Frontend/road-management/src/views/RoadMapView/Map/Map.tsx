@@ -26,12 +26,14 @@ function Map({roadDTO}: IMapComponent) {
     }, [])
 
     const displayMarkers = function () {
+        console.log(road);
+        console.log(currentMarkers);
         currentMarkers?.forEach(marker => {
             marker.setMap(null);
         })
         
         const markers = road?.nodes.map(node => {
-            const coords = new window.google.maps.LatLng(node.latitude, node.longitude);
+            const coords = new window.google.maps.LatLng(node.longitude, node.latitude);
             return new window.google.maps.Marker({position: coords});
         })
 
@@ -46,7 +48,7 @@ function Map({roadDTO}: IMapComponent) {
         currentPolyline?.setMap(null);
         
         const nodePath = road?.nodes.map((node) => {
-            return new window.google.maps.LatLng(node.latitude, node.longitude);
+            return new window.google.maps.LatLng(node.longitude, node.latitude);
         })
 
         const polyline = new window.google.maps.Polyline({
@@ -82,7 +84,7 @@ function Map({roadDTO}: IMapComponent) {
             zoom={startLocation.zoom}
             onLoad={onLoad}
             onUnmount={onUnmount}
-            options={{streetViewControl: false, restriction: mapRestriction}}
+            options={{streetViewControl: false}}
         />
     ) : <></>
 }

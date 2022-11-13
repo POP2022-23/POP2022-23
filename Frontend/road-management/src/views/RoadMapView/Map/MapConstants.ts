@@ -3,7 +3,7 @@ export const startLocation = {
         lat: 52.23,
         lng: 21.05
     },
-    zoom: 1
+    zoom: 10
 }
 
 export const mapRestriction: google.maps.MapRestriction = {

@@ -29,9 +29,9 @@
     text-align: right;
 }
 
-.return-button {
-    width: 100px;
-    margin: 10px auto;
+.navigation-button {
+    width: auto;
+    margin: 10px;
     background: #C4C5D0;
     border-radius: 4px;
 

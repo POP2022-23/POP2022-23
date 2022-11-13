@@ -49,10 +49,10 @@ function RoadMapView({
         <div className="vertical-container">
           <Map roadDTO={selectedDto} />
           <Container className="button-container">
-            <Button className="return-button" onClick={onReturnClick}>
+            <Button className="navigation-button" onClick={onReturnClick}>
               Powrót
             </Button>
-            <Button className="base-button" onClick={onAddRoadClick}>
+            <Button className="navigation-button" onClick={onAddRoadClick}>
               Dodaj drogę
             </Button>
           </Container>
