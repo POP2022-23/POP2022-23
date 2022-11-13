@@ -20,8 +20,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <div className="App">
-      <header className="App-header">
         <RouterProvider router={router} />
-      </header>
     </div>
 );

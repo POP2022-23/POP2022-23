@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 const RegisterCarForm: React.FC<{ checkNewCar: (registrationNumber: string, vin: string) => void }> = (props) => {
   const registrationNumberRef = useRef<HTMLInputElement>(null);
@@ -13,14 +14,18 @@ const RegisterCarForm: React.FC<{ checkNewCar: (registrationNumber: string, vin:
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <label htmlFor='registrationNumber'>Podaj numer rejestracji: </label>
-      <input type='text' id='registrationNumber' required ref={registrationNumberRef} />
+    <Form onSubmit={onSubmitHandler}>
+      <Form.Group controlId='registrationNumber'>
+        <Form.Label>Podaj numer rejestracji:</Form.Label>
+        <Form.Control type='text' required ref={registrationNumberRef} />
+      </Form.Group>
 
-      <label htmlFor='vin'>Podaj numer VIN: </label>
-      <input type='text' id='vin' required ref={vinRef} />
-      <button>Zarejestruj nowy pojazd</button>
-    </form>
+      <Form.Group controlId='vin' className='mb-3'>
+        <Form.Label>Podaj numer VIN:</Form.Label>
+        <Form.Control type='text' required ref={vinRef} />
+      </Form.Group>
+      <Button type='submit'>Zarejestruj nowy pojazd</Button>
+    </Form>
   );
 };
 
