@@ -1,22 +1,9 @@
 import React, { useState } from 'react';
+import CarsList from './CarsList';
 import RegisterCarForm from './RegisterCarForm';
 
-type CarData = {
-  registrationNumber: string;
-  vin: string;
-  engineCapacity: number;
-  height: number;
-  length: number;
-  make: string;
-  model: string;
-  productionYear: number;
-  carType: string;
-  weight: number;
-  width: number;
-};
-
 interface IRegisterCarWindow {
-  clickOnAddNewCarButton: (result: boolean, carData: CarData) => void;
+  clickOnAddNewCarButton: (result: boolean) => void;
 }
 
 interface ICarRegister {
@@ -27,12 +14,22 @@ const RegisterCarView = () => {
   const [infoMessage, setInfoMessage] = useState('');
 
   const getCarFromCEPIK = async (registrationNumber: string, vin: string) => {
-    const server = 'http://localhost:8080/cepik';
-    const registerNumberExample = 'NEL 98AM';
-    const vinExample = '2HGES267X5H581074';
+    const server = 'http://localhost:8080/car';
+    const registerNumberExample = 'ZS 844WV';
+    const vinExample = '3VWLL7AJ9BM053541';
 
     try {
-      const response = await fetch(`${server}?registration=${registrationNumber}&vin=${vin}`);
+      const response = await fetch(server, {
+        method: 'POST',
+        body: JSON.stringify({
+          ownerId: '2',
+          registrationNumber: registrationNumber,
+          vin: vin,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
         return null;
@@ -47,14 +44,8 @@ const RegisterCarView = () => {
 
   // Kontrola danego widoku
   class RegisterCarDispatcher implements IRegisterCarWindow {
-    clickOnAddNewCarButton(result: boolean, carData: CarData): void {
-      setInfoMessage(
-        `${
-          result
-            ? `Udało się zarejestrować pojazd o wadze: ${carData.weight} kg!`
-            : 'Nie udało się zarejestrować pojazdu!'
-        }`
-      );
+    clickOnAddNewCarButton(result: boolean): void {
+      setInfoMessage(`${result ? `Udało się zarejestrować pojazd!` : 'Nie udało się zarejestrować pojazdu!'}`);
     }
   }
 
@@ -63,19 +54,8 @@ const RegisterCarView = () => {
   // Logika
   class RegisterCarPresenter implements ICarRegister {
     async checkNewCar(registrationNumber: string, vin: string): Promise<any> {
-      // Kontakt z Cepikiem
-      const carData = await getCarFromCEPIK(registrationNumber, vin);
-
-      // Kontakt z bazą danych
-      let savedToDataBase;
-      if (carData) {
-        // fetch(POST, carData) - save car to our database
-        savedToDataBase = true;
-      } else {
-        savedToDataBase = false;
-      }
-
-      registerCarDispatcher.clickOnAddNewCarButton(savedToDataBase, carData);
+      const result = await getCarFromCEPIK(registrationNumber, vin);
+      registerCarDispatcher.clickOnAddNewCarButton(result);
     }
   }
 
@@ -85,6 +65,7 @@ const RegisterCarView = () => {
     <div>
       <RegisterCarForm checkNewCar={registerCarPresenter.checkNewCar} />
       <p>{infoMessage}</p>
+      <CarsList />
     </div>
   );
 };

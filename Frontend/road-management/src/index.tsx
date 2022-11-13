@@ -19,11 +19,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
     <div className="App">
       <header className="App-header">
         <RouterProvider router={router} />
       </header>
     </div>
-  </React.StrictMode>
 );

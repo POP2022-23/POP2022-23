@@ -15,10 +15,10 @@ const RegisterCarForm: React.FC<{ checkNewCar: (registrationNumber: string, vin:
   return (
     <form onSubmit={onSubmitHandler}>
       <label htmlFor='registrationNumber'>Podaj numer rejestracji: </label>
-      <input type='text' id='registrationNumber' ref={registrationNumberRef} />
+      <input type='text' id='registrationNumber' required ref={registrationNumberRef} />
 
       <label htmlFor='vin'>Podaj numer VIN: </label>
-      <input type='text' id='vin' ref={vinRef} />
+      <input type='text' id='vin' required ref={vinRef} />
       <button>Zarejestruj nowy pojazd</button>
     </form>
   );
