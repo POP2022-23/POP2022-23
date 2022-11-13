@@ -1,11 +1,21 @@
-.padded-container {
-    min-height: 480px;
-    width: auto;
+.content-container {
     display: flex;
     flex-direction: row;
+}
+
+.main-container {
+    max-width: 1080px;
     padding: 40px;
     user-select: none;
     background: #f6f6f6;
+}
+
+
+.page-title {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    color: black;
 }
 
 .vertical-container {
