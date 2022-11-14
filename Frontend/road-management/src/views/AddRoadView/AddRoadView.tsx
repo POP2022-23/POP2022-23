@@ -5,56 +5,82 @@ import { Alert, Button } from "react-bootstrap";
 import { RoadDataDTO, RoadNodeDTO } from "../../interfaces/map/mapInterfaces";
 
 interface IAddRoadWindow {
+  valid: boolean;
   errorMessage: string | null;
-  onAddRoad: (road: RoadDataDTO) => void;
+  onCancel: () => void;
+  onChanged: (road: RoadDataDTO) => void;
+  onSubmit: () => void;
 }
 
-function AddRoadView({ errorMessage, onAddRoad }: IAddRoadWindow) {
+function AddRoadView({
+  valid,
+  errorMessage,
+  onCancel,
+  onChanged,
+  onSubmit,
+}: IAddRoadWindow) {
   const [nodes, setNodes] = useState<Array<RoadNodeDTO>>([]);
 
-  const idRef = useRef<HTMLInputElement>(null);
   const lengthRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const latRef = useRef<HTMLInputElement>(null);
   const longRef = useRef<HTMLInputElement>(null);
 
-  const onAddNode = (latitude: number, longitude: number) =>
-    setNodes([
+  const onAddNode = (latitude: number, longitude: number) => {
+    let newNodes = [
       ...nodes,
       {
         id: nodes.length > 0 ? nodes[nodes.length - 1].id + 1 : 0,
         latitude,
         longitude,
       },
-    ]);
+    ];
+
+    setNodes(newNodes);
+
+    onChanged({
+      length: parseFloat(lengthRef.current!.value),
+      name: nameRef.current!.value,
+      nodes: newNodes,
+    });
+  };
+
+  const onFieldChanged = () => {
+    onChanged({
+      length: parseFloat(lengthRef.current!.value),
+      name: nameRef.current!.value,
+      nodes: nodes,
+    });
+  };
 
   return (
     <>
       {errorMessage ? <Alert variant={"danger"}>{errorMessage}</Alert> : null}
       <div>
-        <label htmlFor="id">Id: </label>
-        <input type="number" id="id" ref={idRef} />
-      </div>
-      <div>
         <label htmlFor="length">Długość: </label>
-        <input type="number" id="length" ref={lengthRef} />
+        <input
+          type="number"
+          id="length"
+          ref={lengthRef}
+          onChange={onFieldChanged}
+        />
       </div>
       <div>
         <label htmlFor="name">Nazwa: </label>
-        <input type="text" id="name" ref={nameRef} />
+        <input type="text" id="name" ref={nameRef} onChange={onFieldChanged} />
       </div>
       <label>Węzły:</label>
       <ul>
         {nodes.map((node) => (
-          <li>
+          <li key={node.id}>
             id: {node.id}, lat: {node.latitude}, long: {node.longitude}
           </li>
         ))}
       </ul>
       <div>
-        <label htmlFor="lat">Szerokość: </label>
+        <label htmlFor="lat">Długość geograficzna: </label>
         <input type="text" id="lat" ref={latRef} />
-        <label htmlFor="long">Wysokość: </label>
+        <label htmlFor="long">Szerokość geograficzna: </label>
         <input type="text" id="long" ref={longRef} />
         <Button
           variant="primary"
@@ -68,19 +94,14 @@ function AddRoadView({ errorMessage, onAddRoad }: IAddRoadWindow) {
           Dodaj węzeł
         </Button>
       </div>
-      <Button
-        variant="primary"
-        onClick={() =>
-          onAddRoad({
-            id: parseInt(idRef.current!.value),
-            length: parseFloat(lengthRef.current!.value),
-            name: nameRef.current!.value,
-            nodes: nodes,
-          })
-        }
-      >
-        Dodaj drogę
-      </Button>
+      <div>
+        <Button variant="primary" onClick={onCancel}>
+          Anuluj
+        </Button>
+        <Button variant="primary" onClick={onSubmit} disabled={!valid}>
+          Dodaj drogę
+        </Button>
+      </div>
     </>
   );
 }

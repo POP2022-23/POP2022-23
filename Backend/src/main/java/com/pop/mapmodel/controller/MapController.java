@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/map")
 @AllArgsConstructor
+@CrossOrigin(maxAge = 3600)
 public class MapController {
 
     private final IMapService mapService;
