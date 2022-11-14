@@ -18,7 +18,7 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 8)
+    @Column(length = 8, unique = true)
     private String registrationNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)

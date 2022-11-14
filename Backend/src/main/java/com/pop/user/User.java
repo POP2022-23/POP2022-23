@@ -14,10 +14,10 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column(name="user_role")
@@ -30,7 +30,7 @@ public class User {
     @Column
     private String lastName;
 
-    @Column
+    @Column(unique = true)
     private String phoneNumber;
 
     public User(String email, UserRole role, String firstName, String lastName, String phoneNumber) {
