@@ -26,19 +26,14 @@ function MapPresenter() {
   }, []);
 
   const showRoadMapWindow = function () {
-    return roadList.length !== 0 ? (
-      <RoadMapView
+      return <RoadMapView
         roadList={roadList}
-        // XSS :)
         message={message ?? null}
         onReturnClick={onReturnClick}
         onAddRoadClick={onAddRoadClick}
         onSelect={onSelect}
         selectedDto={selectedDto}
       />
-    ) : (
-      <></>
-    );
   };
 
   const onReturnClick = function () {

@@ -29,7 +29,7 @@ function RoadMapView({
 
   useEffect(() => {
     setRoadListDto(roadList);
-  }, []);
+  }, [roadList]);
 
   const launchRoadMap = function () {
     return (
