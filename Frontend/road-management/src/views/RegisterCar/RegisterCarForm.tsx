@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { AddCarDTO } from '../../interfaces/car/carInterfaces';
 
-const RegisterCarForm: React.FC<{ checkNewCar: (registrationNumber: string, vin: string) => void }> = (props) => {
+const RegisterCarForm: React.FC<{ checkNewCar: (carData: AddCarDTO) => void }> = (props) => {
   const registrationNumberRef = useRef<HTMLInputElement>(null);
   const vinRef = useRef<HTMLInputElement>(null);
 
@@ -10,7 +11,7 @@ const RegisterCarForm: React.FC<{ checkNewCar: (registrationNumber: string, vin:
 
     const registrationNumber = registrationNumberRef.current!.value;
     const vin = vinRef.current!.value;
-    props.checkNewCar(registrationNumber, vin);
+    props.checkNewCar({ ownerId: '2', registrationNumber, vin });
   };
 
   return (
