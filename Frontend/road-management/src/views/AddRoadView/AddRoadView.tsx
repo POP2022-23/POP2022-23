@@ -27,6 +27,10 @@ function AddRoadView({
   const longRef = useRef<HTMLInputElement>(null);
 
   const onAddNode = (latitude: number, longitude: number) => {
+    if (isNaN(latitude) || isNaN(longitude)) {
+      return;
+    }
+
     let newNodes = [
       ...nodes,
       {
