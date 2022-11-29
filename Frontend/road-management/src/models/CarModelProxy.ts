@@ -4,7 +4,7 @@ interface IMapModel {
   saveCar: (data: AddCarDTO) => Promise<boolean>;
 }
 
-export class CarModel implements IMapModel {
+export class CarModelProxy implements IMapModel {
   async saveCar(carData: AddCarDTO) {
     const server = 'http://localhost:8080/car';
     const registerNumberExample = 'ZS 844WV';

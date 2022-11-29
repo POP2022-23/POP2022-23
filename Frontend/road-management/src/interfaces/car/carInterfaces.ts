@@ -5,9 +5,9 @@ export type AddCarDTO = {
 };
 
 export interface IRegisterCarWindow {
-  clickOnAddNewCarButton: (status: boolean) => void;
+  showStatusMessage: (status: boolean) => void;
 }
 
 export interface ICarRegister {
-  checkNewCar: (data: AddCarDTO) => void;
+  addNewCar: (data: AddCarDTO) => void;
 }
