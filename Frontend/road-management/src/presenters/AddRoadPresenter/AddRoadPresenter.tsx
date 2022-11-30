@@ -11,7 +11,7 @@ function AddRoadPresenter() {
   const [valid, setValid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onChanged = (road: RoadDataDTO) => {
+  const onInputFieldChanged = (road: RoadDataDTO) => {
     var validationError = AddRoadValidator(road);
 
     setRoad(road);
@@ -19,7 +19,7 @@ function AddRoadPresenter() {
     setValid(validationError == null);
   };
 
-  const onSubmit = async () => {
+  const onAddRoadClicked = async () => {
     if (valid) {
       const model = new MapModel();
 
@@ -39,11 +39,11 @@ function AddRoadPresenter() {
 
   return (
     <AddRoadView
-      valid={valid}
+      isValid={valid}
       errorMessage={error}
       onCancel={onCancel}
-      onChanged={onChanged}
-      onSubmit={onSubmit}
+      onChanged={onInputFieldChanged}
+      onSubmit={onAddRoadClicked}
     />
   );
 }

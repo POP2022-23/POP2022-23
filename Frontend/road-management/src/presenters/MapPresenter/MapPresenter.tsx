@@ -31,7 +31,7 @@ function MapPresenter() {
         message={message ?? null}
         onReturnClick={onReturnClick}
         onAddRoadClick={onAddRoadClick}
-        onSelect={onSelect}
+        onRoadSelect={onRoadSelect}
         selectedDto={selectedDto}
       />
   };
@@ -44,7 +44,7 @@ function MapPresenter() {
     navigate("/addRoad");
   };
 
-  const onSelect = (item: string | null) => {
+  const onRoadSelect = (item: string | null) => {
     if (item !== null) {
       const dto = roadList.find((dto) => dto.id!.toString() === item);
       setSelectedDto(dto);

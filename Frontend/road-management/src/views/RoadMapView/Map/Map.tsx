@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
-import {mapRestriction, polylineSettings, startLocation} from './MapConstants';
+import {polylineSettings, startLocation} from './MapConstants';
 import {RoadDataDTO} from "../../../interfaces/map/mapInterfaces";
 
 interface IMapComponent {

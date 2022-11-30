@@ -3,7 +3,6 @@ import { GetRoadListContract } from "./ApiContracts/mapContracts";
 
 interface IMapModel {
   getRoadList: () => Promise<Array<RoadDataDTO>>;
-
   addRoad: (road: RoadDataDTO) => Promise<boolean>;
 }
 

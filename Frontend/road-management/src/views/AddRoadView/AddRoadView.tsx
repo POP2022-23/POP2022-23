@@ -5,7 +5,7 @@ import { Alert, Button } from "react-bootstrap";
 import { RoadDataDTO, RoadNodeDTO } from "../../interfaces/map/mapInterfaces";
 
 interface IAddRoadWindow {
-  valid: boolean;
+  isValid: boolean;
   errorMessage: string | null;
   onCancel: () => void;
   onChanged: (road: RoadDataDTO) => void;
@@ -13,7 +13,7 @@ interface IAddRoadWindow {
 }
 
 function AddRoadView({
-  valid,
+  isValid,
   errorMessage,
   onCancel,
   onChanged,
@@ -102,7 +102,7 @@ function AddRoadView({
         <Button variant="primary" onClick={onCancel}>
           Anuluj
         </Button>
-        <Button variant="primary" onClick={onSubmit} disabled={!valid}>
+        <Button variant="primary" onClick={onSubmit} disabled={!isValid}>
           Dodaj drogę
         </Button>
       </div>

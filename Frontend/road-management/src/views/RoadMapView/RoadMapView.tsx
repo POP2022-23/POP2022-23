@@ -12,15 +12,15 @@ interface IRoadMapWindow {
   message: string | null;
   onReturnClick: () => void;
   onAddRoadClick: () => void;
-  onSelect: (item: string | null) => void;
+  onRoadSelect: (item: string | null) => void;
 }
 
 function RoadMapView({
   roadList,
   message,
   onReturnClick,
-  onAddRoadClick,
-  onSelect,
+  onAddRoadClick, 
+  onRoadSelect,
   selectedDto,
 }: IRoadMapWindow) {
   const [roadListDto, setRoadListDto] = useState<RoadDataDTO[]>(
@@ -41,7 +41,7 @@ function RoadMapView({
             id={"road-dropdown"}
             variant={"info"}
             title={"Wybierz drogę"}
-            onSelect={onSelect}
+            onSelect={onRoadSelect}
           >
             {roadListDto.map((dto) => {
               return (
