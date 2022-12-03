@@ -33,4 +33,9 @@ public class Road {
         this.length = length;
         this.name = name;
     }
+
+    public void updateNodes(final List<RoadNode> updatedNodes) {
+        nodes.clear();
+        nodes.addAll(updatedNodes);
+    }
 }

@@ -1,7 +1,7 @@
 package com.pop.mapmodel.controller;
 
 import com.pop.mapmodel.dto.RoadDataDTO;
-import com.pop.mapmodel.service.IMapService;
+import com.pop.mapmodel.service.IMapModel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin(maxAge = 3600)
 public class MapController {
 
-    private final IMapService mapService;
+    private final IMapModel mapService;
 
     @GetMapping
     public ResponseEntity<List<RoadDataDTO>> getRoads() {
@@ -28,9 +28,9 @@ public class MapController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> saveRoadData(@RequestBody RoadDataDTO road) {
+    public ResponseEntity<Boolean> saveRoadData(@RequestBody RoadDataDTO roadData) {
         try {
-            if (mapService.saveRoadData(road)) {
+            if (mapService.saveRoadData(roadData)) {
                 return new ResponseEntity<>(true, HttpStatus.CREATED);
             }
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
@@ -39,4 +39,15 @@ public class MapController {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<Boolean> updateRoad(@RequestBody RoadDataDTO roadData) {
+        try {
+            if (mapService.updateRoad(roadData)) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        } catch (final Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

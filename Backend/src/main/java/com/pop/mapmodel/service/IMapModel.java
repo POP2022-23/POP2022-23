@@ -4,10 +4,11 @@ import com.pop.mapmodel.dto.RoadDataDTO;
 
 import java.util.List;
 
-public interface IMapService {
+public interface IMapModel {
 
     List<RoadDataDTO> getRoadList();
 
-    boolean saveRoadData(RoadDataDTO road);
+    boolean saveRoadData(RoadDataDTO roadData);
 
+    boolean updateRoad(RoadDataDTO roadData);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class MapService implements IMapService {
+public class MapService implements IMapModel {
 
     private final RoadJpaRepository roadRepository;
     private final RoadDataMapper roadDataMapper;
@@ -27,10 +27,10 @@ public class MapService implements IMapService {
     }
 
     @Override
-    public boolean saveRoadData(RoadDataDTO roadDataDTO) {
+    public boolean saveRoadData(RoadDataDTO roadData) {
         try {
-            roadDataValidator.validate(roadDataDTO);
-            Road road = roadDataMapper.mapFromDTO(roadDataDTO);
+            roadDataValidator.validate(roadData);
+            Road road = roadDataMapper.mapFromDTO(roadData);
             roadRepository.save(road);
             return true;
         } catch (IllegalArgumentException e) {
@@ -38,4 +38,21 @@ public class MapService implements IMapService {
         }
     }
 
+    @Override
+    public boolean updateRoad(final RoadDataDTO roadData) {
+        try {
+            roadDataValidator.validate(roadData);
+            final Road road = roadRepository.findById(roadData.getId()).orElse(null);
+            if(road == null) {
+                return false;
+            }
+            road.setLength(roadData.getLength());
+            road.setName(roadData.getName());
+            road.updateNodes(roadDataMapper.mapFromDTO(roadData.getNodes(), road));
+            roadRepository.save(road);
+            return true;
+        } catch (final IllegalArgumentException e) {
+            return false;
+        }
+    }
 }
