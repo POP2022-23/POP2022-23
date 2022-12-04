@@ -1,8 +1,10 @@
 package com.pop.tariff.controller;
 
+import com.pop.mapmodel.dto.RoadDataDTO;
 import com.pop.tariff.dto.TariffDTO;
 import com.pop.tariff.service.ITariffModel;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +20,20 @@ public class TariffModelRestController {
 
     @GetMapping
     public ResponseEntity<List<TariffDTO>> getListOfTariffs() {
-        return null;
+        List<TariffDTO> tariffs = tariffModel.getTariffList();
+        return ResponseEntity.ok(tariffs);
     }
 
     @PostMapping
     public ResponseEntity<Boolean> saveNewTariff(@RequestBody TariffDTO tariffData) {
-        return null;
+        try {
+            if (tariffModel.saveNewTariffData(tariffData)) {
+                return new ResponseEntity<>(true, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping

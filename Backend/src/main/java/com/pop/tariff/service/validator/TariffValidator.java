@@ -18,7 +18,7 @@ public class TariffValidator {
         return tariffName != null && !tariffName.equals("");
     }
 
-    private boolean isRatesValid(Map<VehicleType, BigDecimal> rates) {
+    private boolean isRatesValid(Map<String, BigDecimal> rates) {
         if (rates == null || rates.size() == 0) {
             return false;
         }
