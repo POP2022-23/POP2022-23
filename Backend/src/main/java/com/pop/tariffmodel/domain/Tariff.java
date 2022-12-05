@@ -31,6 +31,7 @@ public class Tariff {
     @ElementCollection
     @CollectionTable(name = "tariff_rate", joinColumns = @JoinColumn(name = "tariff_id"))
     @MapKeyColumn(name = "vehicle_type")
+    @MapKeyEnumerated(EnumType.STRING)
     @Column(name = "rate")
     private Map<VehicleType, BigDecimal> rates = new HashMap<>();
 
