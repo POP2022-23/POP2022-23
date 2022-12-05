@@ -1,22 +1,14 @@
-package com.pop.tariff.service;
+package com.pop.tariffmodel.service;
 
-import com.pop.mapmodel.domain.Road;
-import com.pop.mapmodel.repository.RoadJpaRepository;
-import com.pop.tariff.domain.Tariff;
-import com.pop.tariff.domain.TariffFee;
-import com.pop.tariff.domain.VehicleType;
-import com.pop.tariff.dto.TariffDTO;
-import com.pop.tariff.repository.TariffJpaRepository;
-import com.pop.tariff.service.mapper.TariffMapper;
-import com.pop.tariff.service.validator.TariffValidator;
+import com.pop.tariffmodel.domain.Tariff;
+import com.pop.tariffmodel.dto.TariffDTO;
+import com.pop.tariffmodel.repository.TariffJpaRepository;
+import com.pop.tariffmodel.service.mapper.TariffMapper;
+import com.pop.tariffmodel.service.validator.TariffValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service

@@ -1,8 +1,7 @@
-package com.pop.tariff.controller;
+package com.pop.tariffmodel.controller;
 
-import com.pop.mapmodel.dto.RoadDataDTO;
-import com.pop.tariff.dto.TariffDTO;
-import com.pop.tariff.service.ITariffModel;
+import com.pop.tariffmodel.dto.TariffDTO;
+import com.pop.tariffmodel.service.ITariffModel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

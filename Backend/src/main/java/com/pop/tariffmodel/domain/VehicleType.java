@@ -1,4 +1,4 @@
-package com.pop.tariff.domain;
+package com.pop.tariffmodel.domain;
 
 public enum VehicleType {
     MOTORBIKE,

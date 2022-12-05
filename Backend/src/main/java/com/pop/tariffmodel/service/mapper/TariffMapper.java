@@ -1,11 +1,10 @@
-package com.pop.tariff.service.mapper;
+package com.pop.tariffmodel.service.mapper;
 
 import com.pop.mapmodel.domain.Road;
 import com.pop.mapmodel.repository.RoadJpaRepository;
-import com.pop.tariff.domain.Tariff;
-import com.pop.tariff.domain.TariffFee;
-import com.pop.tariff.domain.VehicleType;
-import com.pop.tariff.dto.TariffDTO;
+import com.pop.tariffmodel.domain.Tariff;
+import com.pop.tariffmodel.domain.VehicleType;
+import com.pop.tariffmodel.dto.TariffDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +25,9 @@ public class TariffMapper {
         Tariff tariff = new Tariff();
         tariff.setName(tariffDTO.getName());
         tariff.setValid(tariffDTO.isValid());
-        List<TariffFee> rates = new ArrayList<>();
-        tariffDTO.getRates().forEach((n,r)->{
-            TariffFee tf = new TariffFee();
-            tf.setRate(r);
-            tf.setVehicleType(VehicleType.valueOf(n));
-            rates.add(tf);
-        });
-        tariff.setFees(rates);
+        Map<VehicleType, BigDecimal> rates = new HashMap<>();
+        tariffDTO.getRates().forEach((n, r)-> rates.put(VehicleType.valueOf(n), r));
+        tariff.setRates(rates);
         List<Road> roads  = new ArrayList<>();
         tariffDTO.getRoadIds().forEach(roadId ->{
             roads.add(roadJpaRepository.findById(roadId).orElseThrow(
@@ -46,9 +40,8 @@ public class TariffMapper {
 
     public TariffDTO mapTariffModelToDTO(Tariff tariffModel) {
         Map<String, BigDecimal> rates = new HashMap<>();
-        tariffModel.getFees().forEach(r->{
-            rates.put(r.getVehicleType().toString(),r.getRate());
-        });
+        tariffModel.getRates().forEach((vehicleType, rate) -> rates.put(vehicleType.name(), rate));
+
         return TariffDTO.builder()
                 .id(tariffModel.getId())
                 .name(tariffModel.getName())

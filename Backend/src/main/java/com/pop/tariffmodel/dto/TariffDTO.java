@@ -1,6 +1,5 @@
-package com.pop.tariff.dto;
+package com.pop.tariffmodel.dto;
 
-import com.pop.tariff.domain.VehicleType;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,7 +1,6 @@
-package com.pop.tariff.service.validator;
+package com.pop.tariffmodel.service.validator;
 
-import com.pop.tariff.domain.VehicleType;
-import com.pop.tariff.dto.TariffDTO;
+import com.pop.tariffmodel.dto.TariffDTO;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
