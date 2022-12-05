@@ -1,10 +1,8 @@
 package com.pop.tariff.service;
 
 import com.pop.mapmodel.domain.Road;
-import com.pop.mapmodel.repository.RoadJpaRepository;
 import com.pop.tariff.domain.Tariff;
 import com.pop.tariff.domain.TariffFee;
-import com.pop.tariff.domain.VehicleType;
 import com.pop.tariff.dto.TariffDTO;
 import com.pop.tariff.repository.TariffJpaRepository;
 import com.pop.tariff.service.mapper.TariffMapper;
@@ -12,11 +10,7 @@ import com.pop.tariff.service.validator.TariffValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,8 +39,23 @@ public class BasicTariffModel implements ITariffModel {
     }
 
     @Override
-    public boolean saveTariffChangeData(TariffDTO tariffData) {
-        return false;
-    }
+    public boolean saveTariffChangeData(final TariffDTO tariffData) {
+        if (!tariffValidator.validateTariff(tariffData)) {
+            return false;
+        }
+        final Tariff tariff = tariffJpaRepository.findById(tariffData.getId()).orElse(null);
+        if (tariff == null) {
+            return false;
+        }
 
+        tariff.setName(tariffData.getName());
+        tariff.setValid(tariffData.isValid());
+        final List<TariffFee> fees = tariffMapper.mapRatesToTariffFeesList(tariffData.getRates());
+        tariff.updateTariffFees(fees);
+        final List<Road> roads  = tariffMapper.mapRoadIdsToRoadsList(tariffData.getRoadIds());
+        tariff.updateRoads(roads);
+
+        tariffJpaRepository.save(tariff);
+        return true;
+    }
 }

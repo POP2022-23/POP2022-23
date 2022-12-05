@@ -26,22 +26,32 @@ public class TariffMapper {
         Tariff tariff = new Tariff();
         tariff.setName(tariffDTO.getName());
         tariff.setValid(tariffDTO.isValid());
+        List<TariffFee> rates = mapRatesToTariffFeesList(tariffDTO.getRates());
+        tariff.setFees(rates);
+        List<Road> roads  = mapRoadIdsToRoadsList(tariffDTO.getRoadIds());
+        tariff.setRoads(roads);
+        return tariff;
+    }
+
+    public List<TariffFee> mapRatesToTariffFeesList(Map<String, BigDecimal> tariffRates) {
         List<TariffFee> rates = new ArrayList<>();
-        tariffDTO.getRates().forEach((n,r)->{
+        tariffRates.forEach((n,r)->{
             TariffFee tf = new TariffFee();
             tf.setRate(r);
             tf.setVehicleType(VehicleType.valueOf(n));
             rates.add(tf);
         });
-        tariff.setFees(rates);
+        return rates;
+    }
+
+    public List<Road> mapRoadIdsToRoadsList(List<Long> roadIds) {
         List<Road> roads  = new ArrayList<>();
-        tariffDTO.getRoadIds().forEach(roadId ->{
+        roadIds.forEach(roadId ->{
             roads.add(roadJpaRepository.findById(roadId).orElseThrow(
                     () -> new RuntimeException("Road with id " + roadId + " does not exist")
             ));
         });
-        tariff.setRoads(roads);
-        return tariff;
+        return roads;
     }
 
     public TariffDTO mapTariffModelToDTO(Tariff tariffModel) {

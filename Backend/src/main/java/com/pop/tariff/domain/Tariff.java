@@ -32,9 +32,17 @@ public class Tariff {
     private List<TariffFee> fees;
 
     @OneToMany(
-            cascade = CascadeType.ALL,
-
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
     private List<Road> roads;
+
+    public void updateTariffFees(List<TariffFee> updatedFees) {
+        fees.clear();
+        fees.addAll(updatedFees);
+    }
+
+    public void updateRoads(List<Road> updatedRoads) {
+        roads.clear();
+        roads.addAll(updatedRoads);
+    }
 }
