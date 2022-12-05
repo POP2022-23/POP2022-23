@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RoadMapView from "../../views/RoadMapView/RoadMapView";
 import { RoadDataDTO } from "../../interfaces/map/mapInterfaces";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { MapModel } from "../../models/MapModel";
+import { MapModelProxy } from "../../models/MapModelProxy";
 
 function MapPresenter() {
   const [roadList, setRoadList] = useState<RoadDataDTO[]>(
@@ -17,23 +17,26 @@ function MapPresenter() {
 
   useEffect(() => {
     // fetch from API
-    const model = new MapModel();
+    const proxy = new MapModelProxy();
     async function fetchFromApi() {
-      setRoadList(await model.getRoadList());
+      setRoadList(await proxy.getRoadList());
     }
 
     fetchFromApi();
   }, []);
 
   const showRoadMapWindow = function () {
-      return <RoadMapView
+    return (
+      <RoadMapView
         roadList={roadList}
         message={message ?? null}
         onReturnClick={onReturnClick}
         onAddRoadClick={onAddRoadClick}
+        onEditRoadClick={onEditRoadClick}
         onRoadSelect={onRoadSelect}
         selectedDto={selectedDto}
       />
+    );
   };
 
   const onReturnClick = function () {
@@ -42,6 +45,12 @@ function MapPresenter() {
 
   const onAddRoadClick = function () {
     navigate("/addRoad");
+  };
+
+  const onEditRoadClick = function () {
+    if (selectedDto?.id != null) {
+      navigate("/editRoad/" + selectedDto?.id?.toString());
+    }
   };
 
   const onRoadSelect = (item: string | null) => {

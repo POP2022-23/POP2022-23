@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoadDataDTO } from "../../interfaces/map/mapInterfaces";
-import { MapModel } from "../../models/MapModel";
+import { MapModelProxy } from "../../models/MapModelProxy";
 import AddRoadView from "../../views/AddRoadView/AddRoadView";
 import AddRoadValidator from "./AddRoadValidator";
 
@@ -21,9 +21,9 @@ function AddRoadPresenter() {
 
   const onAddRoadClicked = async () => {
     if (valid) {
-      const model = new MapModel();
+      const proxy = new MapModelProxy();
 
-      const result = await model.addRoad(road!);
+      const result = await proxy.saveRoadData(road!);
 
       if (result) {
         navigate("/map?message=Droga została dodana");

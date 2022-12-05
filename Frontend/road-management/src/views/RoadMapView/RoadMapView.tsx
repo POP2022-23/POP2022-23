@@ -12,6 +12,7 @@ interface IRoadMapWindow {
   message: string | null;
   onReturnClick: () => void;
   onAddRoadClick: () => void;
+  onEditRoadClick: () => void;
   onRoadSelect: (item: string | null) => void;
 }
 
@@ -19,7 +20,8 @@ function RoadMapView({
   roadList,
   message,
   onReturnClick,
-  onAddRoadClick, 
+  onAddRoadClick,
+  onEditRoadClick,
   onRoadSelect,
   selectedDto,
 }: IRoadMapWindow) {
@@ -59,6 +61,9 @@ function RoadMapView({
               </Button>
               <Button className="navigation-button" onClick={onAddRoadClick}>
                 Dodaj drogę
+              </Button>
+              <Button className="navigation-button" onClick={onEditRoadClick}>
+                Edytuj drogę
               </Button>
             </Container>
           </div>

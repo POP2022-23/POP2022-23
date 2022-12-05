@@ -3,10 +3,11 @@ import { GetRoadListContract } from "./ApiContracts/mapContracts";
 
 interface IMapModel {
   getRoadList: () => Promise<Array<RoadDataDTO>>;
-  addRoad: (road: RoadDataDTO) => Promise<boolean>;
+  saveRoadData: (road: RoadDataDTO) => Promise<boolean>;
+  updateRoad: (road: RoadDataDTO) => Promise<boolean>;
 }
 
-export class MapModel implements IMapModel {
+export class MapModelProxy implements IMapModel {
   private serverUrl = "http://localhost:8080/";
 
   private async getRoadListFromServer(): Promise<Array<GetRoadListContract> | null> {
@@ -56,7 +57,7 @@ export class MapModel implements IMapModel {
     });
   }
 
-  async addRoad(road: RoadDataDTO): Promise<boolean> {
+  async saveRoadData(road: RoadDataDTO): Promise<boolean> {
     const requestUrl = this.serverUrl + "map";
 
     try {
@@ -69,6 +70,28 @@ export class MapModel implements IMapModel {
       });
 
       if (response.status === 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error: any) {
+      return false;
+    }
+  }
+
+  async updateRoad(road: RoadDataDTO): Promise<boolean> {
+    const requestUrl = this.serverUrl + "map";
+
+    try {
+      const response = await fetch(requestUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(road),
+      });
+
+      if (response.status === 200) {
         return true;
       } else {
         return false;
