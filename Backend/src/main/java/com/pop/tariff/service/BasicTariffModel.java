@@ -26,36 +26,21 @@ public class BasicTariffModel implements ITariffModel {
     private final TariffJpaRepository tariffJpaRepository;
     private final TariffValidator tariffValidator;
     private final TariffMapper tariffMapper;
-    private final RoadJpaRepository roadJpaRepository;
 
     @Override
     public List<TariffDTO> getTariffList() {
-        return tariffJpaRepository.findAll().stream().map(this::map).collect(Collectors.toList());
+        return tariffJpaRepository.findAll().stream()
+                .map(tariffMapper::mapTariffModelToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public boolean saveNewTariffData(TariffDTO tariffData) {
-        Tariff tariff = new Tariff();
-        tariff.setName(tariffData.getName());
-        tariff.setValid(tariffData.isValid());
-        List<TariffFee> rates = new ArrayList<>();
-        tariffData.getRates().forEach((n,r)->{
-            TariffFee tf = new TariffFee();
-            tf.setRate(r);
-            tf.setVehicleType(VehicleType.valueOf(n));
-            rates.add(tf);
-        });
-        tariff.setFees(rates);
-        List<Road> roads  = new ArrayList<>();
-        tariffData.getRoadIds().forEach(roadId ->{
-            roads.add(roadJpaRepository.findById(roadId).orElseThrow(
-                    () -> new RuntimeException("Road with id " + roadId + " does not exist")
-            ));
-        });
-        tariff.setRoads(roads);
-
+        if(!tariffValidator.validateTariff(tariffData)) {
+            return false;
+        }
+        Tariff tariff = tariffMapper.mapTariffDTOToModel(tariffData);
         tariffJpaRepository.save(tariff);
-
         return true;
     }
 
@@ -64,17 +49,4 @@ public class BasicTariffModel implements ITariffModel {
         return false;
     }
 
-    private TariffDTO map(Tariff tariff){
-        Map<String, BigDecimal> rates = new HashMap<>();
-        tariff.getFees().forEach(r->{
-            rates.put(r.getVehicleType().toString(),r.getRate());
-        });
-        return TariffDTO.builder()
-                .id(tariff.getId())
-                .name(tariff.getName())
-                .isValid(tariff.isValid())
-                .rates(rates)
-                .roadIds(tariff.getRoads().stream().map(r -> r.getId()).collect(Collectors.toList()))
-                .build();
-    }
 }

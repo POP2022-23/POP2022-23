@@ -23,7 +23,7 @@ public class TariffValidator {
             return false;
         }
         for (final BigDecimal num : rates.values()) {
-            if (num == null || num.compareTo(BigDecimal.ZERO) > 0) {
+            if (num == null || num.compareTo(BigDecimal.ZERO) <= 0) {
                 return false;
             }
         }
