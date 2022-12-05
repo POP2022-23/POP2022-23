@@ -36,7 +36,15 @@ public class TariffModelRestController {
     }
 
     @PutMapping
-    public ResponseEntity<Boolean> saveTariffChangeData(@RequestBody TariffDTO tariffData) {
-        return null;
+    public ResponseEntity<Boolean> saveTariffChangeData(@RequestBody final TariffDTO tariffData) {
+        try {
+            if (tariffModel.saveTariffChangeData(tariffData)) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            }
+        } catch (final Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

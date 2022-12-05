@@ -1,6 +1,5 @@
 package com.pop.tariffmodel.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pop.mapmodel.domain.Road;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,9 +35,17 @@ public class Tariff {
     private Map<VehicleType, BigDecimal> rates = new HashMap<>();
 
     @OneToMany(
-            cascade = CascadeType.ALL,
-
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
     private List<Road> roads;
+
+    public void updateTariffRates(Map<VehicleType, BigDecimal> updatedRates) {
+        rates.clear();
+        rates = updatedRates;
+    }
+
+    public void updateRoads(List<Road> updatedRoads) {
+        roads.clear();
+        roads.addAll(updatedRoads);
+    }
 }
