@@ -1,6 +1,6 @@
-package com.pop.tariff.service;
+package com.pop.tariffmodel.service;
 
-import com.pop.tariff.dto.TariffDTO;
+import com.pop.tariffmodel.dto.TariffDTO;
 
 import java.util.List;
 
