@@ -8,6 +8,7 @@ import EditRoadPresenter from "./presenters/EditRoadPresenter/EditRoadPresenter"
 import MapPresenter from "./presenters/MapPresenter/MapPresenter";
 import DashboardView from "./views/Dashboard/Dashboard";
 import RegisterCarView from "./views/RegisterCar/RegisterCarView";
+import TariffView from "./views/TariffView/TariffView";
 
 const router = createBrowserRouter([
   { path: "/", element: <DashboardView /> },
@@ -15,6 +16,9 @@ const router = createBrowserRouter([
   { path: "/map", element: <MapPresenter /> },
   { path: "/addRoad", element: <AddRoadPresenter /> },
   { path: "/editRoad/:id", element: <EditRoadPresenter /> },
+  { path: "/tariffs", element: <TariffView /> },
+
+  
 ]);
 
 const root = ReactDOM.createRoot(

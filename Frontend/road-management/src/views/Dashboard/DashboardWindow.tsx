@@ -14,6 +14,7 @@ const DashboardWindow: React.FC<{ launchFees: () => void, launchMap: () => void,
                         <Nav.Link as={Link} to="/registerCar">Zarejestruj nowy pojazd</Nav.Link>
                         <Nav.Link as={Link} to="/map">Pokaż mapę sieci drogowej</Nav.Link>
                         <Nav.Link as={Link} to="/addRoad">Dodaj mapę do sieci drogowej</Nav.Link>
+                        <Nav.Link as={Link} to="/tariffs">Taryfikatory</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
