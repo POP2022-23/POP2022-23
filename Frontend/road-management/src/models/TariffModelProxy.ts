@@ -24,6 +24,7 @@ export class TariffModelProxy implements ITariffModel {
       }
 
       const jsonResponse = await response.json();
+      console.log(jsonResponse);
       return jsonResponse as Array<TariffDTO>;
     } catch (error: any) {
       return null;
@@ -73,6 +74,12 @@ export class TariffModelProxy implements ITariffModel {
 
   async updateTariff(tariff: TariffDTO): Promise<boolean> {
     const requestUrl = "http://localhost:8080/tariff";
+    console.log(tariff);
+    
+    const tariffTransformed = {
+      ...tariff,
+      rates: Object.fromEntries(tariff.rates)
+    }
 
     try {
       const response = await fetch(requestUrl, {
@@ -80,9 +87,10 @@ export class TariffModelProxy implements ITariffModel {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(tariff),
+        body: JSON.stringify(tariffTransformed),
       });
 
+      console.log(response);
       if (response.status === 200) {
         return true;
       } else {
