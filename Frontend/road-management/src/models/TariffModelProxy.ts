@@ -1,4 +1,4 @@
-import { TariffDTO } from "../interfaces/tariff/tariffinterfaces";
+import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
 
 interface ITariffModel {
   getTariffList: () => Promise<Array<TariffDTO>>;
@@ -7,15 +7,14 @@ interface ITariffModel {
 }
 
 export class TariffModelProxy implements ITariffModel {
-
   private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
-    const requestUrl = "http://localhost:8080/tariff";
+    const requestUrl = 'http://localhost:8080/tariff';
 
     try {
       const response = await fetch(requestUrl, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -44,20 +43,20 @@ export class TariffModelProxy implements ITariffModel {
         isValid: item.isValid,
         name: item.name,
         rates: item.rates,
-        roadIds: item.roadIds
+        roadIds: item.roadIds,
       };
       return tariffDTO;
     });
   }
 
   async saveTariffdData(tariff: TariffDTO) {
-    const requestUrl = "http://localhost:8080/tariff";
+    const requestUrl = 'http://localhost:8080/tariff';
 
     try {
       const response = await fetch(requestUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(tariff),
       });
@@ -73,19 +72,19 @@ export class TariffModelProxy implements ITariffModel {
   }
 
   async updateTariff(tariff: TariffDTO): Promise<boolean> {
-    const requestUrl = "http://localhost:8080/tariff";
+    const requestUrl = 'http://localhost:8080/tariff';
     console.log(tariff);
-    
+
     const tariffTransformed = {
       ...tariff,
-      rates: Object.fromEntries(tariff.rates)
-    }
+      rates: Object.fromEntries(tariff.rates),
+    };
 
     try {
       const response = await fetch(requestUrl, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(tariffTransformed),
       });
