@@ -38,6 +38,7 @@ public class Tariff {
     @OneToMany(
             cascade = CascadeType.ALL
     )
+    @JoinColumn(name = "tariff_id")
     private List<Road> roads;
 
     public void updateTariffRates(Map<VehicleType, BigDecimal> updatedRates) {
