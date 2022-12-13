@@ -1,7 +1,9 @@
 export type TariffDTO = {
     id: number;
-    category: string;
-    price: number;
+    isValid: boolean;
+    name: string;
+    rates: Map<string, number>
+    roadIds: Array<number>
   };
   
   export interface ITariffWindow {
@@ -12,6 +14,7 @@ export type TariffDTO = {
     onAddFormChanged: (data: TariffDTO) => void;
     sendNewTariffDataToSave: (data: TariffDTO) => void;
     sendTariffChangeDataToSave: (data: TariffDTO) => void;
-    onDeleteClicked: (data: TariffDTO) => void;
+    onRoadIdSelected: (data: string) => void;
+
   }
   
