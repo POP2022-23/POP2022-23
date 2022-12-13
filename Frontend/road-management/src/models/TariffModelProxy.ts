@@ -52,13 +52,18 @@ export class TariffModelProxy implements ITariffModel {
   async saveTariffdData(tariff: TariffDTO) {
     const requestUrl = 'http://localhost:8080/tariff';
 
+    const tariffTransformed = {
+      ...tariff,
+      rates: Object.fromEntries(tariff.rates),
+    };
+
     try {
       const response = await fetch(requestUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(tariff),
+        body: JSON.stringify(tariffTransformed),
       });
 
       if (response.status === 201) {
