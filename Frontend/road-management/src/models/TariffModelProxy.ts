@@ -1,13 +1,13 @@
-import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
+import { TariffDTO, TariffDTO2 } from '../interfaces/tariff/tariffinterfaces';
 
 interface ITariffModel {
   getTariffList: () => Promise<Array<TariffDTO>>;
-  saveTariffdData: (tariff: TariffDTO) => Promise<boolean>;
+  saveTariffData: (tariff: TariffDTO) => Promise<boolean>;
   updateTariff: (tariff: TariffDTO) => Promise<boolean>;
 }
 
 export class TariffModelProxy implements ITariffModel {
-  private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
+  private async getTariffListFromServer(): Promise<Array<TariffDTO2> | null> {
     const requestUrl = 'http://localhost:8080/tariff';
 
     try {
@@ -23,8 +23,7 @@ export class TariffModelProxy implements ITariffModel {
       }
 
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
-      return jsonResponse as Array<TariffDTO>;
+      return jsonResponse as Array<TariffDTO2>;
     } catch (error: any) {
       return null;
     }
@@ -40,7 +39,7 @@ export class TariffModelProxy implements ITariffModel {
     return tariffList.map((item) => {
       const tariffDTO: TariffDTO = {
         id: item.id,
-        isValid: item.isValid,
+        isValid: item.valid,
         name: item.name,
         rates: item.rates,
         roadIds: item.roadIds,
@@ -49,7 +48,7 @@ export class TariffModelProxy implements ITariffModel {
     });
   }
 
-  async saveTariffdData(tariff: TariffDTO) {
+  async saveTariffData(tariff: TariffDTO) {
     const requestUrl = 'http://localhost:8080/tariff';
 
     const tariffTransformed = {
@@ -66,6 +65,7 @@ export class TariffModelProxy implements ITariffModel {
         body: JSON.stringify(tariffTransformed),
       });
 
+      console.log(response);
       if (response.status === 201) {
         return true;
       } else {
@@ -78,7 +78,6 @@ export class TariffModelProxy implements ITariffModel {
 
   async updateTariff(tariff: TariffDTO): Promise<boolean> {
     const requestUrl = 'http://localhost:8080/tariff';
-    console.log(tariff);
 
     const tariffTransformed = {
       ...tariff,
@@ -95,6 +94,7 @@ export class TariffModelProxy implements ITariffModel {
       });
 
       console.log(response);
+
       if (response.status === 200) {
         return true;
       } else {

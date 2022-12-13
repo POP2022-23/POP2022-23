@@ -7,44 +7,36 @@ import { TariffModelProxy } from '../../models/TariffModelProxy';
 
 const TariffWindow = () => {
   const [editing, setEditing] = useState(false);
+
   const [adding, setAdding] = useState(false);
+
   const [editingField, setEditingField] = useState(false);
-  const [addFormData, setAddFormData] = useState<TariffDTO | undefined>(undefined);
-  const [editFormData, setEditFormData] = useState<TariffDTO | undefined>(undefined);
+
   const [infoMessage, setInfoMessage] = useState('');
+
   const [tariffList, setTariffList] = useState<TariffDTO[]>(new Array<TariffDTO>());
+
   const [selectedTariff, setSelectedTariff] = useState<TariffDTO | undefined>(undefined);
-  const [newSelectedTariff, setNewSelectedTariff] = useState<TariffDTO | undefined>(undefined);
 
   useEffect(() => {
     const proxy = new TariffModelProxy();
+
     async function fetchFromApi() {
       setTariffList(await proxy.getTariffList());
     }
+
     fetchFromApi();
   }, []);
 
   class TariffDispatcher implements ITariffWindow {
     showStatusMessage(result: boolean): void {
-      setInfoMessage(`${result ? `Udało się dodać taryfikator!` : 'Nie udało się dodać taryfikatora!'}`);
+      setInfoMessage(`${result ? `Udała się akcja!` : 'Nie udała się akcja!'}`);
     }
   }
 
   const tariffDispatcher = new TariffDispatcher();
 
   class TariffPresenter implements ITariff {
-    onAddFormChanged = (event: any) => {
-      // event.preventDefault();
-      // const fieldName = event.target.getAttribute('name');
-      // const fieldValue = event.target.value;
-      // const newFormData = { ...addFormData };
-      // newFormData[fieldName] = fieldValue;
-      // if (selectedTariff !== undefined) {
-      //   new Map(Object.entries(selectedTariff!.rates)).set(fieldName, fieldValue);
-      //   setNewSelectedTariff(selectedTariff);
-      // }
-    };
-
     sendTariffChangeDataToSave = async (event: any) => {
       event.preventDefault();
 
@@ -54,10 +46,14 @@ const TariffWindow = () => {
       if (selectedTariff !== undefined) {
         const tariffProxy = new TariffModelProxy();
 
-        selectedTariff.rates = new Map(Object.entries(selectedTariff!.rates)).set(fieldName, +fieldValue);
-        console.log(selectedTariff.rates);
+        const updatedTariff: TariffDTO = { ...selectedTariff };
+        const rates = new Map(Object.entries(updatedTariff!.rates)).set(fieldName, +fieldValue);
+        updatedTariff.rates = rates;
 
-        let proxyResponse = await tariffProxy.updateTariff(selectedTariff);
+        console.log('updatedTariff');
+        console.log(updatedTariff);
+        let proxyResponse = await tariffProxy.updateTariff(updatedTariff);
+        tariffDispatcher.showStatusMessage(proxyResponse);
       }
     };
 
@@ -74,7 +70,7 @@ const TariffWindow = () => {
         [event.target[7].getAttribute('name'), +event.target[7].value],
       ]);
 
-      const newtariff = {
+      const newTariff = {
         id: id,
         isValid: true,
         name: 'tarriff' + id,
@@ -82,20 +78,27 @@ const TariffWindow = () => {
         roadIds: event.target[8].value.split(',').map((el: string) => +el),
       };
 
+      console.log('newTariff');
+      console.log(newTariff);
+
       const tariffProxy = new TariffModelProxy();
-      let proxyResponse = await tariffProxy.saveTariffdData(newtariff);
+      let proxyResponse = await tariffProxy.saveTariffData(newTariff);
       tariffDispatcher.showStatusMessage(proxyResponse);
 
-      const newtariffs = [...tariffList, newtariff];
-      setTariffList(newtariffs);
+      const newTariffs = [...tariffList, newTariff];
+      setTariffList(newTariffs);
     };
 
     onRoadIdSelected = (item: string | null) => {
       if (item !== null) {
         const tl = tariffList.find((tl) => tl.id!.toString() === item);
+
+        console.log('Selected tariff:');
         console.log(tl);
-        tl!.isValid = true;
+
         setSelectedTariff(tl);
+        setEditing(false);
+        setAdding(false);
       }
     };
   }
@@ -125,7 +128,10 @@ const TariffWindow = () => {
           style={{ marginRight: '35px' }}
           type='checkbox'
           label={`Edytuj`}
-          onClick={() => setEditing(!editing)}
+          onClick={() => {
+            setEditing((currentEditing) => !currentEditing);
+            setAdding(false);
+          }}
         />
 
         <Form.Check
@@ -133,14 +139,22 @@ const TariffWindow = () => {
           style={{ marginRight: '35px' }}
           type='checkbox'
           label={`Dodawaj`}
-          onClick={() => setAdding((currentAdding) => !currentAdding)}
+          onClick={() => {
+            setAdding((currentAdding) => !currentAdding);
+            setEditing(false);
+          }}
         />
       </Form>
       {editing && (
         <>
-          <Button onClick={() => setEditingField(!editingField)}>Rozpocznij/Zakończ edycję</Button>
+          <Button onClick={() => setEditingField((currEditingField) => !currEditingField)}>
+            Rozpocznij/Zakończ edycję
+          </Button>
         </>
       )}
+
+      <p>{infoMessage}</p>
+
       {selectedTariff !== undefined && !adding && (
         <Form className='d-flex justify-content-center' style={{ margin: '30px' }}>
           <table>
@@ -154,11 +168,7 @@ const TariffWindow = () => {
               <Fragment key={selectedTariff.id}>
                 <tr>
                   <td>
-                    <input
-                      disabled={true}
-                      defaultValue='Motocykl'
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
-                    ></input>
+                    <label>Motocykl</label>
                   </td>
                   <td>
                     <input
@@ -171,11 +181,7 @@ const TariffWindow = () => {
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      disabled={true}
-                      defaultValue='Samochód osobowy'
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
-                    ></input>
+                    <label>Samochód osobowy</label>
                   </td>
                   <td>
                     <input
@@ -188,11 +194,7 @@ const TariffWindow = () => {
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      disabled={true}
-                      defaultValue='Autobus'
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
-                    ></input>
+                    <label>Autobus</label>
                   </td>
                   <td>
                     <input
@@ -205,11 +207,7 @@ const TariffWindow = () => {
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      disabled={true}
-                      defaultValue='Pojazd ciężarowy'
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
-                    ></input>
+                    <label>Pojazd ciężarowy</label>
                   </td>
                   <td>
                     <input
@@ -243,7 +241,7 @@ const TariffWindow = () => {
               <Fragment>
                 <tr>
                   <td>
-                    <input disabled={true} defaultValue='Motocykl'></input>
+                    <label>Motocykl</label>
                   </td>
                   <td>
                     <input name='MOTORBIKE'></input>
@@ -251,7 +249,7 @@ const TariffWindow = () => {
                 </tr>
                 <tr>
                   <td>
-                    <input disabled={true} defaultValue='Samochód osobowy'></input>
+                    <label>Samochód osobowy</label>
                   </td>
                   <td>
                     <input name='PASSENGER_CAR'></input>
@@ -259,7 +257,7 @@ const TariffWindow = () => {
                 </tr>
                 <tr>
                   <td>
-                    <input disabled={true} defaultValue='Autobus'></input>
+                    <label>Autobus</label>
                   </td>
                   <td>
                     <input name='BUS'></input>
@@ -267,7 +265,7 @@ const TariffWindow = () => {
                 </tr>
                 <tr>
                   <td>
-                    <input disabled={true} defaultValue='Pojazd ciężarowy'></input>
+                    <label>Pojazd ciężarowy</label>
                   </td>
                   <td>
                     <input name='TRUCK'></input>
