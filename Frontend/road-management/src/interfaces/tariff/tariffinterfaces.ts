@@ -14,12 +14,12 @@ export type TariffDTO2 = {
   roadIds: Array<number>;
 };
 
-export interface ITariffWindow {
+export interface ITariffView {
   showStatusMessage: (status: boolean) => void;
 }
 
-export interface ITariff {
-  sendNewTariffDataToSave: (data: TariffDTO) => void;
-  sendTariffChangeDataToSave: (data: TariffDTO) => void;
-  onRoadIdSelected: (data: string) => void;
+export interface ITariffPresenter {
+  handleAddFormDataSubmit: (event: any) => void;
+  handleUpdateFormChange: (event: any) => void;
+  handleRoadSelected: (item: string) => void;
 }

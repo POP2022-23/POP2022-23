@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
-import { ITariff, ITariffWindow, TariffDTO } from '../../interfaces/tariff/tariffinterfaces';
+import { ITariffPresenter, ITariffView, TariffDTO } from '../../interfaces/tariff/tariffinterfaces';
 import { TariffModelProxy } from '../../models/TariffModelProxy';
 
 const TariffWindow = () => {
@@ -28,7 +28,7 @@ const TariffWindow = () => {
     fetchFromApi();
   }, []);
 
-  class TariffDispatcher implements ITariffWindow {
+  class TariffDispatcher implements ITariffView {
     showStatusMessage(result: boolean): void {
       setInfoMessage(`${result ? `Udała się akcja!` : 'Nie udała się akcja!'}`);
     }
@@ -36,8 +36,8 @@ const TariffWindow = () => {
 
   const tariffDispatcher = new TariffDispatcher();
 
-  class TariffPresenter implements ITariff {
-    sendTariffChangeDataToSave = async (event: any) => {
+  class TariffPresenter implements ITariffPresenter {
+    handleUpdateFormChange = async (event: any) => {
       event.preventDefault();
 
       const fieldName = event.target.getAttribute('name');
@@ -57,12 +57,11 @@ const TariffWindow = () => {
       }
     };
 
-    sendNewTariffDataToSave = async (event: any) => {
+    handleAddFormDataSubmit = async (event: any) => {
       event.preventDefault();
       console.log(event);
       const id = Math.floor(Math.random() * (1000 - 0 + 1) + 0);
 
-      // Better would be using refs/useState
       const rates = new Map([
         [event.target[1].getAttribute('name'), +event.target[1].value],
         [event.target[3].getAttribute('name'), +event.target[3].value],
@@ -89,7 +88,7 @@ const TariffWindow = () => {
       setTariffList(newTariffs);
     };
 
-    onRoadIdSelected = (item: string | null) => {
+    handleRoadSelected = (item: string | null) => {
       if (item !== null) {
         const tl = tariffList.find((tl) => tl.id!.toString() === item);
 
@@ -112,7 +111,7 @@ const TariffWindow = () => {
         style={{ marginTop: '20px' }}
         variant={'info'}
         title={'Droga'}
-        onSelect={tariffPresenter.onRoadIdSelected}
+        onSelect={tariffPresenter.handleRoadSelected}
       >
         {tariffList.map((tl) => {
           return (
@@ -125,10 +124,11 @@ const TariffWindow = () => {
       <Form>
         <Form.Check
           reverse
+          checked={editing}
           style={{ marginRight: '35px' }}
           type='checkbox'
           label={`Edytuj`}
-          onClick={() => {
+          onChange={() => {
             setEditing((currentEditing) => !currentEditing);
             setAdding(false);
           }}
@@ -136,10 +136,11 @@ const TariffWindow = () => {
 
         <Form.Check
           reverse
+          checked={adding}
           style={{ marginRight: '35px' }}
           type='checkbox'
           label={`Dodawaj`}
-          onClick={() => {
+          onChange={() => {
             setAdding((currentAdding) => !currentAdding);
             setEditing(false);
           }}
@@ -175,7 +176,7 @@ const TariffWindow = () => {
                       name='MOTORBIKE'
                       disabled={!editingField}
                       defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('MOTORBIKE')}
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
+                      onChange={tariffPresenter.handleUpdateFormChange}
                     ></input>
                   </td>
                 </tr>
@@ -188,7 +189,7 @@ const TariffWindow = () => {
                       name='PASSENGER_CAR'
                       disabled={!editingField}
                       defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('PASSENGER_CAR')}
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
+                      onChange={tariffPresenter.handleUpdateFormChange}
                     ></input>
                   </td>
                 </tr>
@@ -201,7 +202,7 @@ const TariffWindow = () => {
                       name='BUS'
                       disabled={!editingField}
                       defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('BUS')}
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
+                      onChange={tariffPresenter.handleUpdateFormChange}
                     ></input>
                   </td>
                 </tr>
@@ -214,7 +215,7 @@ const TariffWindow = () => {
                       name='TRUCK'
                       disabled={!editingField}
                       defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('TRUCK')}
-                      onChange={tariffPresenter.sendTariffChangeDataToSave}
+                      onChange={tariffPresenter.handleUpdateFormChange}
                     ></input>
                   </td>
                 </tr>
@@ -228,7 +229,7 @@ const TariffWindow = () => {
         <Form
           className='d-flex justify-content-center'
           style={{ margin: '30px' }}
-          onSubmit={tariffPresenter.sendNewTariffDataToSave}
+          onSubmit={tariffPresenter.handleAddFormDataSubmit}
         >
           <table>
             <thead>
