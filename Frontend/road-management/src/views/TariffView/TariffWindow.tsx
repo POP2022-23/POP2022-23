@@ -63,10 +63,10 @@ const TariffWindow = () => {
       const id = Math.floor(Math.random() * (1000 - 0 + 1) + 0);
 
       const rates = new Map([
-        [event.target[1].getAttribute('name'), +event.target[1].value],
-        [event.target[3].getAttribute('name'), +event.target[3].value],
-        [event.target[5].getAttribute('name'), +event.target[5].value],
-        [event.target[7].getAttribute('name'), +event.target[7].value],
+        ['BUS', +event.target[0].value],
+        ['MOTORBIKE', +event.target[1].value],
+        ['PASSENGER_CAR', +event.target[2].value],
+        ['TRUCK', +event.target[3].value],
       ]);
 
       const newTariff = {
@@ -74,7 +74,7 @@ const TariffWindow = () => {
         isValid: true,
         name: 'tarriff' + id,
         rates: rates,
-        roadIds: event.target[8].value.split(',').map((el: string) => +el),
+        roadIds: event.target[4].value.split(',').map((el: string) => +el),
       };
 
       console.log('newTariff');
