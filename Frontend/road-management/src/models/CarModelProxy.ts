@@ -1,14 +1,14 @@
 import { AddCarDTO } from '../interfaces/car/carInterfaces';
 
 interface IMapModel {
-  saveCar: (data: AddCarDTO) => Promise<boolean>;
+  saveCar: (carData: AddCarDTO) => Promise<boolean>;
 }
 
 export class CarModelProxy implements IMapModel {
   async saveCar(carData: AddCarDTO) {
     const server = 'http://localhost:8080/car';
-    const registerNumberExample = 'ZS 844WV';
-    const vinExample = '3VWLL7AJ9BM053541';
+    // const registerNumberExample = 'ZS 844WV';
+    // const vinExample = '3VWLL7AJ9BM053541';
 
     try {
       const response = await fetch(server, {

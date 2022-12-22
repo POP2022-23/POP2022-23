@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import CarsList from './CarsList';
-import RegisterCarForm from './RegisterCarForm';
-import { IRegisterCarWindow, ICarRegister, AddCarDTO } from '../../interfaces/car/carInterfaces';
+import { useState } from 'react';
+import { AddCarDTO, ICarRegister, IRegisterCarWindow } from '../../interfaces/car/carInterfaces';
 import { CarModelProxy } from '../../models/CarModelProxy';
+import RegisterCarForm from './RegisterCarForm';
 
 const RegisterCarView = () => {
   const [infoMessage, setInfoMessage] = useState('');
@@ -30,7 +29,7 @@ const RegisterCarView = () => {
     <div>
       <RegisterCarForm checkNewCar={registerCarPresenter.addNewCar} />
       <p>{infoMessage}</p>
-      <CarsList />
+      {/* <CarsList /> */}
     </div>
   );
 };

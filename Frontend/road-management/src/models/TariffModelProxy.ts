@@ -1,4 +1,4 @@
-import { TariffDTO, TariffDTO2 } from '../interfaces/tariff/tariffinterfaces';
+import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
 
 interface ITariffModel {
   getTariffList: () => Promise<Array<TariffDTO>>;
@@ -7,7 +7,7 @@ interface ITariffModel {
 }
 
 export class TariffModelProxy implements ITariffModel {
-  private async getTariffListFromServer(): Promise<Array<TariffDTO2> | null> {
+  private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
     const requestUrl = 'http://localhost:8080/tariff';
 
     try {
@@ -23,7 +23,8 @@ export class TariffModelProxy implements ITariffModel {
       }
 
       const jsonResponse = await response.json();
-      return jsonResponse as Array<TariffDTO2>;
+      console.log(jsonResponse); // valid instead of isValid?
+      return jsonResponse as Array<TariffDTO>;
     } catch (error: any) {
       return null;
     }
@@ -36,10 +37,18 @@ export class TariffModelProxy implements ITariffModel {
       return new Array<TariffDTO>();
     }
 
+    // type TariffDTO2 = {
+    //   id: number;
+    //   valid: boolean;
+    //   name: string;
+    //   rates: Map<string, number>;
+    //   roadIds: Array<number>;
+    // };
+
     return tariffList.map((item) => {
-      const tariffDTO: TariffDTO = {
+      const tariffDTO = {
         id: item.id,
-        isValid: item.valid,
+        isValid: item.isValid,
         name: item.name,
         rates: item.rates,
         roadIds: item.roadIds,

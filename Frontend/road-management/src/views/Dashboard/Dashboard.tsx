@@ -1,91 +1,64 @@
-import React, { useState } from 'react';
-import DashboardWindow from "./DashboardWindow"
-
+import DashboardWindow from './DashboardWindow';
 
 interface IDashboardWindow {
-    clickOnRegisterNewCarButton: () => void;
-    clickOnRoadMapButton: () => void;
-    showDashboardButton: () => void;
+  clickOnRegisterNewCarButton: () => void;
+  clickOnRoadMapButton: () => void;
+  showDashboardButton: () => void;
 }
 
 interface IDashboard {
-    launchFees: () => void;
-    launchMap: () => void;
-    launchRegisterCar: () => void;
-    launchTariffs: () => void;
-    logOut: () => void;
+  launchFees: () => void;
+  launchMap: () => void;
+  launchRegisterCar: () => void;
+  launchTariffs: () => void;
+  logOut: () => void;
 }
 
 const DashboardView = () => {
-   
-    // Kontrola danego widoku
-    class DashboardDispatcher implements IDashboardWindow {
-        
-        clickOnRegisterNewCarButton () : void{
+  class DashboardDispatcher implements IDashboardWindow {
+    clickOnRegisterNewCarButton(): void {}
+    clickOnRoadMapButton(): void {}
+    showDashboardButton(): void {}
 
-        }
-        clickOnRoadMapButton () : void{
+    clickOnLaunchTariffsButton(): void {}
+    clickOnLogoutButton(): void {}
+  }
 
-        };
-        showDashboardButton () : void{
-            
-        }
+  const dashboardDispatcher = new DashboardDispatcher();
 
-        clickOnLaunchTariffsButton() : void {
+  class DashboardPresenter implements IDashboard {
+    async launchFees(): Promise<any> {}
 
-        }
-        clickOnLogoutButton() : void {
-
-        }
+    async launchRegisterCar(): Promise<any> {
+      dashboardDispatcher.clickOnRegisterNewCarButton();
     }
 
-    const dashboardDispatcher = new DashboardDispatcher();
-
-    // Logika
-    class DashboardPresenter implements IDashboard {
-        
-
-        async launchFees(): Promise<any> {
-            
-        }
-
-        async launchRegisterCar(): Promise<any> {
-            
-            dashboardDispatcher.clickOnRegisterNewCarButton();
-        }
-
-        async launchMap(): Promise<any> {
-           
-
-           dashboardDispatcher.clickOnRoadMapButton();
-        }
-
-        async launchTariffs(): Promise<any> {
-            
-
-            dashboardDispatcher.clickOnLaunchTariffsButton();
-        }
-
-        async logOut(): Promise<any> {
-           
-
-            dashboardDispatcher.clickOnLogoutButton();
-        }
-
+    async launchMap(): Promise<any> {
+      dashboardDispatcher.clickOnRoadMapButton();
     }
 
-    const dashboardPresenter = new DashboardPresenter();
+    async launchTariffs(): Promise<any> {
+      dashboardDispatcher.clickOnLaunchTariffsButton();
+    }
 
-    return (
-        <div>
-            <DashboardWindow launchFees={dashboardPresenter.launchFees} 
-            launchMap={dashboardPresenter.launchMap} 
-            launchRegisterCar={dashboardPresenter.launchRegisterCar}
-            launchTariffs={dashboardPresenter.launchTariffs}
-            logOut={dashboardPresenter.logOut}
-            />
-        </div>
-    );
+    async logOut(): Promise<any> {
+      dashboardDispatcher.clickOnLogoutButton();
+    }
+  }
+
+  const dashboardPresenter = new DashboardPresenter();
+
+  return (
+    <div>
+      <DashboardWindow
+        launchFees={dashboardPresenter.launchFees}
+        launchMap={dashboardPresenter.launchMap}
+        launchRegisterCar={dashboardPresenter.launchRegisterCar}
+        launchTariffs={dashboardPresenter.launchTariffs}
+        logOut={dashboardPresenter.logOut}
+      />
+    </div>
+  );
 };
 
 export default DashboardView;
