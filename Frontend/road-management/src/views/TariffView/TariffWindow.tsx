@@ -219,6 +219,65 @@ const TariffWindow = () => {
                     ></input>
                   </td>
                 </tr>
+
+                <tr>
+                  <td>
+                    <h3>Abonamenty</h3>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>Abonament: Motocykl</label>
+                  </td>
+                  <td>
+                    <input
+                      name='SUB-MOTORBIKE'
+                      disabled={!editingField}
+                      defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('MOTORBIKE')}
+                      onChange={tariffPresenter.handleUpdateFormChange}
+                    ></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Abonament: Samochód osobowy</label>
+                  </td>
+                  <td>
+                    <input
+                      name='SUB-PASSENGER_CAR'
+                      disabled={!editingField}
+                      defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('PASSENGER_CAR')}
+                      onChange={tariffPresenter.handleUpdateFormChange}
+                    ></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Abonament: Autobus</label>
+                  </td>
+                  <td>
+                    <input
+                      name='SUB-BUS'
+                      disabled={!editingField}
+                      defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('BUS')}
+                      onChange={tariffPresenter.handleUpdateFormChange}
+                    ></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Abonament: Pojazd ciężarowy</label>
+                  </td>
+                  <td>
+                    <input
+                      name='SUB-TRUCK'
+                      disabled={!editingField}
+                      defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('TRUCK')}
+                      onChange={tariffPresenter.handleUpdateFormChange}
+                    ></input>
+                  </td>
+                </tr>
               </Fragment>
             </tbody>
           </table>
@@ -239,40 +298,77 @@ const TariffWindow = () => {
               </tr>
             </thead>
             <tbody>
-              <Fragment>
-                <tr>
-                  <td>
-                    <label>Motocykl</label>
-                  </td>
-                  <td>
-                    <input name='MOTORBIKE'></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label>Samochód osobowy</label>
-                  </td>
-                  <td>
-                    <input name='PASSENGER_CAR'></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label>Autobus</label>
-                  </td>
-                  <td>
-                    <input name='BUS'></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label>Pojazd ciężarowy</label>
-                  </td>
-                  <td>
-                    <input name='TRUCK'></input>
-                  </td>
-                </tr>
-              </Fragment>
+              <tr>
+                <td>
+                  <label>Motocykl</label>
+                </td>
+                <td>
+                  <input name='MOTORBIKE'></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>Samochód osobowy</label>
+                </td>
+                <td>
+                  <input name='PASSENGER_CAR'></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>Autobus</label>
+                </td>
+                <td>
+                  <input name='BUS'></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>Pojazd ciężarowy</label>
+                </td>
+                <td>
+                  <input name='TRUCK'></input>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <h3>Abonamenty</h3>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Abonament: Motocykl</label>
+                </td>
+                <td>
+                  <input name='SUB-MOTORBIKE'></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>Abonament: Samochód osobowy</label>
+                </td>
+                <td>
+                  <input name='SUB-PASSENGER_CAR'></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>Abonament: Autobus</label>
+                </td>
+                <td>
+                  <input name='SUB-BUS'></input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>Abonament: Pojazd ciężarowy</label>
+                </td>
+                <td>
+                  <input name='SUB-TRUCK'></input>
+                </td>
+              </tr>
             </tbody>
           </table>
           <input type='text' placeholder='Podaj id dróg po przecinku' />
