@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -8,6 +7,7 @@ import EditRoadPresenter from "./presenters/EditRoadPresenter/EditRoadPresenter"
 import MapPresenter from "./presenters/MapPresenter/MapPresenter";
 import DashboardView from "./views/Dashboard/Dashboard";
 import RegisterCarView from "./views/RegisterCar/RegisterCarView";
+import BuySubscriptionView from "./views/SubscriptionView/BuySubscriptionView";
 import TariffWindow from "./views/TariffView/TariffWindow";
 
 const router = createBrowserRouter([
@@ -17,8 +17,7 @@ const router = createBrowserRouter([
   { path: "/addRoad", element: <AddRoadPresenter /> },
   { path: "/editRoad/:id", element: <EditRoadPresenter /> },
   { path: "/tariffs", element: <TariffWindow /> },
-
-  
+  { path: "/subscription", element: <BuySubscriptionView /> },
 ]);
 
 const root = ReactDOM.createRoot(
