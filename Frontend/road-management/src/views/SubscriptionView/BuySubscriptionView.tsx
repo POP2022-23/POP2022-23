@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { IFees, IFeesWindow } from '../../interfaces/fees/feesinterfaces';
@@ -15,6 +15,8 @@ const BuySubscriptionView = () => {
     driverId: string;
     paymentType: string;
   } | null>(null);
+
+  const monthsRef = useRef<any>(null);
 
   const [infoMessage, setInfoMessage] = useState('');
 
@@ -118,26 +120,51 @@ const BuySubscriptionView = () => {
 
     if (!selectedTariff) {
       feesDispatcher.showMessageAboutUncorrectData();
+      return;
     }
 
     const feesPresenter = new FeesPresenter(feesDispatcher);
 
-    feesPresenter.openSubscriptionPaymentWindow(selectedTariff!.id || 0, 2, '2');
+    feesPresenter.openSubscriptionPaymentWindow(selectedTariff!.id || 0, monthsRef.current.value, '2');
   };
 
   // "Okienka" - dałem je tutaj aby łatwiej było zarządzać stanem
   const PaymentTypeWindow = () => {
+    const [paymentOption, setPaymentOption] = useState(0);
+
+    const paymentOptions = [
+      { id: 0, name: 'karta' },
+      { id: 1, name: 'blik' },
+    ];
+
+    const onPaymentSelect = (item: any) => {
+      setPaymentOption(item);
+    };
+
     const handleSubmit = () => {
       const feesDispatcher = new FeesDispatcher();
       const feesPresenter = new FeesPresenter(feesDispatcher);
 
-      feesPresenter.openRedirectSubscriptionPaymentWindow(0);
+      feesPresenter.openRedirectSubscriptionPaymentWindow(paymentOption);
     };
 
     return (
       <div>
-        {/* to do */}
-        Sposób płacenia itp. <button onClick={handleSubmit}>Zapłać</button>
+        <DropdownButton
+          id={'road-dropdown'}
+          variant={'info'}
+          title={'Wybierz opcję płatności'}
+          onSelect={onPaymentSelect}
+        >
+          {paymentOptions.map((payment) => {
+            return (
+              <Dropdown.Item key={payment.id} eventKey={payment.id}>
+                {payment.name}
+              </Dropdown.Item>
+            );
+          })}
+        </DropdownButton>
+        <button onClick={handleSubmit}>Zapłać</button>
       </div>
     );
   };
@@ -159,16 +186,17 @@ const BuySubscriptionView = () => {
       makePayment();
     }, []);
 
-    return <div>Udała się płatność / Nie udała się płatność </div>;
+    return <div>Udała się płatność / Nie udała się płatność</div>;
   };
 
   return (
     <>
       {windowToShow === 'subscription' && (
         <div style={{ textAlign: 'center' }}>
+          <h1 style={{ textAlign: 'center' }}>Wybierz drogę, aby kupić abonament zgodnie z jej taryfikatorem</h1>
+
           {infoMessage && <p>{infoMessage}</p>}
 
-          <h1 style={{ textAlign: 'center' }}>Wybierz drogę, aby kupić abonament zgodnie z jej taryfikatorem</h1>
           <DropdownButton
             style={{ marginTop: '20px' }}
             variant={'info'}
@@ -306,7 +334,7 @@ const BuySubscriptionView = () => {
             <Form style={{ width: '50%' }} onSubmit={handleSubmit}>
               <Form.Group controlId='months'>
                 <Form.Label>Podaj liczbę miesięcy:</Form.Label>
-                <Form.Control type='number' step={1} min={1} required />
+                <Form.Control type='number' step={1} min={1} required ref={monthsRef} />
               </Form.Group>
               <Button type='submit'>Kup Abonament</Button>
             </Form>
