@@ -30,8 +30,8 @@ const DashboardWindow: React.FC<{
             <Nav.Link as={Link} to='/tariffs'>
               Taryfikatory
             </Nav.Link>
-            <Nav.Link as={Link} to='/subscription'>
-              Kup abonament
+            <Nav.Link as={Link} to='/fees'>
+              Opłaty
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

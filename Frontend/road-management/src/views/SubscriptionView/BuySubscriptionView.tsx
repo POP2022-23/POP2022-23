@@ -1,12 +1,15 @@
 import { Fragment, useEffect, useState } from 'react';
 
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
+import { IFees, IFeesWindow } from '../../interfaces/fees/feesinterfaces';
 import { TariffDTO } from '../../interfaces/tariff/tariffinterfaces';
 import { FeesModelProxy } from '../../models/FeesModelProxy';
 
 const BuySubscriptionView = () => {
   const [tariffList, setTariffList] = useState<TariffDTO[]>(new Array<TariffDTO>());
   const [selectedTariff, setSelectedTariff] = useState<TariffDTO | undefined>(undefined);
+
+  const [infoMessage, setInfoMessage] = useState('');
 
   const handleRoadSelected = (item: string | null) => {
     if (item !== null) {
@@ -28,6 +31,44 @@ const BuySubscriptionView = () => {
 
     fetchFromApi();
   }, []);
+
+  class FeesDispatcher implements IFeesWindow {
+    launchFeeDetailsWindow(): void {}
+    launchMenuWindow(): void {}
+    launchPaidFeesListWindow(): void {}
+    launchSubscriptionPayWindow(): void {}
+    launchUnpaidFeesListWindow(): void {}
+    openFeeDetailsWindow(): void {}
+    showFailedWindow(): void {
+      setInfoMessage('Nie udało się przejść do okna płatności.');
+    }
+    showPaymentTypeWindow(): void {}
+    showRedirectPaymentLoadingWindow(): void {}
+    showSuccessfulWindow(): void {
+      setInfoMessage('Abonament został poprawnie zakupiony');
+    }
+  }
+
+  class FeesPresenter implements IFees {
+    feesDispatcher;
+
+    constructor(feesDispatcher: FeesDispatcher) {
+      this.feesDispatcher = feesDispatcher;
+    }
+
+    openMenuWindow(): void {}
+    openPaidFeesListWindow(): void {}
+    openRedirectRidePaymentWindow(): void {}
+    openRedirectSubscriptionPaymentWindow(): void {}
+    openSubscriptionPaymentWindow(): void {}
+    openUnpaidFeesListWindow(): void {}
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const feesDispatcher = new FeesDispatcher();
+    const feesPresenter = new FeesPresenter(feesDispatcher);
+  };
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -166,7 +207,7 @@ const BuySubscriptionView = () => {
       )}
 
       <div className='d-flex justify-content-center'>
-        <Form style={{ width: '50%' }}>
+        <Form style={{ width: '50%' }} onSubmit={handleSubmit}>
           <Form.Group controlId='months'>
             <Form.Label>Podaj liczbę miesięcy:</Form.Label>
             <Form.Control type='number' step={1} min={1} required />
