@@ -4,12 +4,15 @@ export interface IFeesModel {
   getPaidFeesList: () => void;
   getSubscriptionTariffList: () => void;
   getUnpaidFeesList: () => void;
+
   redirectToRidePayment: () => void;
-  redirectToSubscriptionPayment: () => void;
+
+  redirectToSubscriptionPayment: (test: string) => void;
 }
 
 export class FeesModelProxy implements IFeesModel {
   getPaidFeesList() {}
+
   private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
     const requestUrl = 'http://localhost:8080/tariff';
 
@@ -53,8 +56,12 @@ export class FeesModelProxy implements IFeesModel {
   }
 
   getUnpaidFeesList() {}
+
   redirectToRidePayment() {}
-  redirectToSubscriptionPayment() {
-    console.log('test');
+
+  // to do
+  redirectToSubscriptionPayment(test: string) {
+    console.log('redirectToSubscriptionPayment');
+    console.log(test);
   }
 }

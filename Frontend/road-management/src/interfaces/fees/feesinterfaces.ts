@@ -1,4 +1,5 @@
 export interface IFeesWindow {
+  showMessageAboutUncorrectData: () => void;
   launchFeeDetailsWindow: () => void;
   launchMenuWindow: () => void;
   launchPaidFeesListWindow: () => void;
@@ -15,7 +16,7 @@ export interface IFees {
   openMenuWindow: () => void;
   openPaidFeesListWindow: () => void;
   openRedirectRidePaymentWindow: () => void;
-  openRedirectSubscriptionPaymentWindow: () => void;
-  openSubscriptionPaymentWindow: () => void;
+  openRedirectSubscriptionPaymentWindow: (paymentType: number) => void;
+  openSubscriptionPaymentWindow: (subTariffId: number, monthAmount: number, driverId: string) => void;
   openUnpaidFeesListWindow: () => void;
 }
