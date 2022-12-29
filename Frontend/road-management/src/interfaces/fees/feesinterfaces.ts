@@ -16,7 +16,9 @@ export interface IFees {
   openMenuWindow: () => void;
   openPaidFeesListWindow: () => void;
   openRedirectRidePaymentWindow: () => void;
+
   openRedirectSubscriptionPaymentWindow: (paymentType: number) => void;
   openSubscriptionPaymentWindow: (subTariffId: number, monthAmount: number, driverId: string) => void;
+  openSubscriptionPayWindow: () => void;
   openUnpaidFeesListWindow: () => void;
 }

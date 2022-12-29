@@ -54,7 +54,10 @@ const BuySubscriptionView = () => {
 
     launchPaidFeesListWindow(): void {}
 
-    launchSubscriptionPayWindow(): void {}
+    launchSubscriptionPayWindow(): void {
+      setWindowToShow('subscription');
+      setInfoMessage('');
+    }
 
     launchUnpaidFeesListWindow(): void {}
 
@@ -66,10 +69,12 @@ const BuySubscriptionView = () => {
 
     showPaymentTypeWindow(): void {
       setWindowToShow('choosePayment');
+      setInfoMessage('');
     }
 
     showRedirectPaymentLoadingWindow(): void {
       setWindowToShow('paymentResult');
+      setInfoMessage('');
     }
 
     showSuccessfulWindow(): void {
@@ -97,6 +102,10 @@ const BuySubscriptionView = () => {
         };
       });
       this.feesDispatcher.showRedirectPaymentLoadingWindow();
+    }
+
+    openSubscriptionPayWindow(): void {
+      this.feesDispatcher.launchSubscriptionPayWindow();
     }
 
     openSubscriptionPaymentWindow(subTariffId: number, monthAmount: number, driverId: string): void {
@@ -149,7 +158,7 @@ const BuySubscriptionView = () => {
     };
 
     return (
-      <div>
+      <div style={{ textAlign: 'center' }}>
         <DropdownButton
           id={'road-dropdown'}
           variant={'info'}
@@ -164,7 +173,7 @@ const BuySubscriptionView = () => {
             );
           })}
         </DropdownButton>
-        <button onClick={handleSubmit}>Zapłać</button>
+        <Button onClick={handleSubmit}>Zapłać</Button>
       </div>
     );
   };
@@ -177,25 +186,37 @@ const BuySubscriptionView = () => {
       console.log(payment);
 
       const result = await proxy.redirectToSubscriptionPayment('...');
-      setTimeout(() => {
-        setWindowToShow('subscription');
-      }, 1000);
+      const feesDispatcher = new FeesDispatcher();
+      const feesPresenter = new FeesPresenter(feesDispatcher);
+
+      feesDispatcher.showFailedWindow();
     };
 
     useEffect(() => {
       makePayment();
     }, []);
 
-    return <div>Udała się płatność / Nie udała się płatność</div>;
+    const handleGoBack = () => {
+      const feesDispatcher = new FeesDispatcher();
+      const feesPresenter = new FeesPresenter(feesDispatcher);
+
+      feesPresenter.openSubscriptionPayWindow();
+    };
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Button onClick={handleGoBack}>Powrót do zakupu abonamentu</Button>
+      </div>
+    );
   };
 
   return (
-    <>
+    <div style={{ marginTop: '24px' }}>
+      {infoMessage && <p style={{ textAlign: 'center' }}>{infoMessage}</p>}
+
       {windowToShow === 'subscription' && (
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ textAlign: 'center' }}>Wybierz drogę, aby kupić abonament zgodnie z jej taryfikatorem</h1>
-
-          {infoMessage && <p>{infoMessage}</p>}
 
           <DropdownButton
             style={{ marginTop: '20px' }}
@@ -344,7 +365,7 @@ const BuySubscriptionView = () => {
 
       {windowToShow === 'choosePayment' && <PaymentTypeWindow />}
       {windowToShow === 'paymentResult' && <SubscriptionPaymentWindow />}
-    </>
+    </div>
   );
 };
 
