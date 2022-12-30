@@ -30,21 +30,33 @@ public class FeesModelRestController {
 
     @GetMapping
     public ResponseEntity<List<TariffDTO>> getSubscriptionTariffsList() {
-        return null;
+        try {
+            List<TariffDTO> listOfSubscriptions = feesModel.getSubscriptionTariffsList(userId);
+            return new ResponseEntity<>(listOfSubscriptions, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }      
     }
 
     @GetMapping("/{userId}/unpaid")
     public ResponseEntity<List<FeesDTO>> getUnpaidFeesList(long userId) {
-        return null;
+        try {
+            List<TariffDTO> listOfUnpaidFees = feesModel.getUnpaidFeesList(userId);
+            return new ResponseEntity<>(listOfUnpaidFees, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }      
     }
 
     @PostMapping("/ride")
     public ResponseEntity<Boolean> redirectToRidePayment() {
-        return null;
+        Boolean isRidePaymentSuccessful = true;
+        return new ResponseEntity<>(isRidePaymentSuccessful, HttpStatus.OK);
     }
 
     @PostMapping("/subscription")
     public ResponseEntity<Boolean> redirectToSubscriptionPayment() {
-        return null;
+        Boolean isSubscriptionPaymentSuccessful = true;
+        return new ResponseEntity<>(isSubscriptionPaymentSuccessful, HttpStatus.OK);
     }
 }

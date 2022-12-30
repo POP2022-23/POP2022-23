@@ -6,31 +6,36 @@ import java.time.LocalDateTime;
 
 @Service
 public class FeesValidator {
-    public boolean validate() {
-        return false;
+    List<String> months = Arrays.asList("styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec",
+    "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień");
+
+    private void isEmailValid(String email) {
+        if(!email.contains("@")) {
+            throw new IllegalArgumentException("Incorrect email address entered.");
+        }
+    }
+        
+    private void isFirstNameValid(String firstName) {
+        if(!lastName.matches("[A-Z][a-z]+")) {
+            throw new IllegalArgumentException("Incorrect first name entered.");
+        } 
     }
 
-    private boolean isEmailValid(String email) {
-        return false;
+    private void isMonthValid (LocalDateTime month) {
+        if(!months.contains(month)) {
+            throw new IllegalArgumentException("Incorrect name of the month.");
+        }
     }
 
-    private boolean isFirstNameValid(String firstName) {
-        return false;
+    private void isLastNameValid (String lastName) {
+        if(!lastName.matches("[A-Z][a-z]+")) {
+            throw new IllegalArgumentException("Incorrect last name entered.");
+        }
     }
 
-    private boolean isFromDateValid (LocalDateTime fromDate) {
-        return false;
-    }
-
-    private boolean isLastNameValid (String lastName) {
-        return false;
-    }
-
-    private boolean isPhoneNumberValid (String phoneNumber) {
-        return false;
-    }
-
-    private boolean isToDateValid (LocalDateTime toDate) {
-        return false;
+    private void isPhoneNumberValid (String phoneNumber) {
+        if(!phoneNumber.length() == 9 || !phoneNumber.matches("[0-9]+")) {
+            throw new IllegalArgumentException("Incorrect last name entered.");
+        }    
     }
 }

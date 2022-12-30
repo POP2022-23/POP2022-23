@@ -21,8 +21,6 @@ public class FeesDTO {
     private LocalDateTime issueDate;
     private FeeType feeType;
     private boolean isPaid;
-    //roadIds chyba niepotrzebne, ta informacja jest w polu tariff
-    private List<Long> roadIds;
     private TariffDTO tariff;
     private VehicleType vehicleType;
 }

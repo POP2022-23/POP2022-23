@@ -16,15 +16,13 @@ public class FeesMapper {
                 null, null, feeModel.getVehicleType());
     }
 
-    public BigDecimal mapFeesDtoAmountToFeesAmount(BigDecimal feesAmount) {
-        return null;
-    }
-
-    public Fee mapFeesDtoToFeesModel(FeesDTO feesDTO) {
-        return null;
-    }
-
     public List<Road> mapRoadIdsToRoadList(List<Long> roadIds) {
-        return null;
+        List<Road> roads  = new ArrayList<>();
+        roadIds.forEach(roadId ->{
+            roads.add(FeeJpaRepository.findById(roadId).orElseThrow(
+                () -> new RuntimeException("Road with id " + roadId + " does not exist")
+            ));
+        });
+        return roads;
     }
 }

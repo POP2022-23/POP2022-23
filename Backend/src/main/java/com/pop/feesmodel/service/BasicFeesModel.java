@@ -38,12 +38,27 @@ public class BasicFeesModel implements IFeesModel {
 
     @Override
     public List<TariffDTO> getSubscriptionTariffsList() {
-        return null;
+        List<TariffDTO> subscriptionsList = new ArrayList<>();
+        List<Tariff> subscriptions = feeJpaRepository.findAllByUserId(userId);
+        for(Tariff subscription: subscriptions) {
+            TariffDTO subscriptionsDTO = tariffMapper.mapTariffModelToDTO(subscription);
+            subscriptionsList.add(subscriptionsDTO);
+        }
+        return subscriptionsList;
     }
 
     @Override
     public List<FeesDTO> getUnpaidFeesList(long userId) {
-        return null;
+        List<FeesDTO> unpaidFeesList = new ArrayList<>();
+        List<Fee> unpaidFees = feeJpaRepository.findAllByUserId(userId);
+        for (Fee fee : fees) {
+            FeesDTO unpaidFeesDTO = feesMapper.mapFeeModelToFeesDto(fee);
+            unpaidFeesDTO.setTariff(tariffMapper.mapTariffModelToDTO(fee.getTariff));
+            if(unpaidFeesDTO.isPaidUp == false) {
+               unpaidFeesList.add(unpaidFeesDTO);
+           }
+        }
+        return unpaidFeesList;
     }
 
     @Override
