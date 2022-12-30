@@ -1,12 +1,22 @@
+export type DriverDataDTO = {
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  phoneNumber: string;
+};
+
 export interface IFeesWindow {
-  showMessageAboutUncorrectData: () => void;
   launchFeeDetailsWindow: () => void;
   launchMenuWindow: () => void;
   launchPaidFeesListWindow: () => void;
   launchSubscriptionPayWindow: () => void;
   launchUnpaidFeesListWindow: () => void;
-  openFeeDetailsWindow: () => void;
+
+  openFeeDetailsWindow: (feeId: number) => void;
+
   showFailedWindow: () => void;
+  showMessageAboutUncorrectData: () => void;
   showPaymentTypeWindow: () => void;
   showRedirectPaymentLoadingWindow: () => void;
   showSuccessfulWindow: () => void;
@@ -15,7 +25,8 @@ export interface IFeesWindow {
 export interface IFees {
   openMenuWindow: () => void;
   openPaidFeesListWindow: () => void;
-  openRedirectRidePaymentWindow: () => void;
+
+  openRedirectRidePaymentWindow: (feeId: number, driverData: DriverDataDTO) => void;
 
   openRedirectSubscriptionPaymentWindow: (paymentType: number) => void;
   openSubscriptionPaymentWindow: (subTariffId: number, monthAmount: number, driverId: string) => void;

@@ -1,17 +1,23 @@
 import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
 
 export interface IFeesModel {
-  getPaidFeesList: () => void;
-  getSubscriptionTariffList: () => void;
-  getUnpaidFeesList: () => void;
+  getPaidFeesList: (userId: string) => void;
+  getSubscriptionTariffList: () => Promise<Array<TariffDTO> | null>;
+
+  getUnpaidFeesList: (userId: string) => void;
 
   redirectToRidePayment: () => void;
 
-  redirectToSubscriptionPayment: (test: string) => void;
+  redirectToSubscriptionPayment: (
+    subTariffId: number,
+    monthAmount: number,
+    driverId: string,
+    paymentType: number
+  ) => Promise<Boolean>;
 }
 
 export class FeesModelProxy implements IFeesModel {
-  getPaidFeesList() {}
+  getPaidFeesList(userId: string) {}
 
   private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
     const requestUrl = 'http://localhost:8080/tariff';
@@ -55,13 +61,18 @@ export class FeesModelProxy implements IFeesModel {
     });
   }
 
-  getUnpaidFeesList() {}
+  getUnpaidFeesList(userId: string) {}
 
   redirectToRidePayment() {}
 
   // to do
-  redirectToSubscriptionPayment(test: string) {
+  async redirectToSubscriptionPayment(subTariffId: number, monthAmount: number, driverId: string, paymentType: number) {
     console.log('redirectToSubscriptionPayment');
-    console.log(test);
+    console.log(subTariffId, monthAmount, driverId, paymentType);
+    if (paymentType === 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

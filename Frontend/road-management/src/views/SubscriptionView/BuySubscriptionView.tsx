@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
-import { IFees, IFeesWindow } from '../../interfaces/fees/feesinterfaces';
+import { DriverDataDTO, IFees, IFeesWindow } from '../../interfaces/fees/feesinterfaces';
 import { TariffDTO } from '../../interfaces/tariff/tariffinterfaces';
 import { FeesModelProxy } from '../../models/FeesModelProxy';
 
@@ -61,7 +61,7 @@ const BuySubscriptionView = () => {
 
     launchUnpaidFeesListWindow(): void {}
 
-    openFeeDetailsWindow(): void {}
+    openFeeDetailsWindow(feeId: number): void {}
 
     showFailedWindow(): void {
       setInfoMessage('Nie udało się zakupić abonamentu.');
@@ -92,7 +92,7 @@ const BuySubscriptionView = () => {
     openMenuWindow(): void {}
     openPaidFeesListWindow(): void {}
 
-    openRedirectRidePaymentWindow(): void {}
+    openRedirectRidePaymentWindow(feeId: number, driverData: DriverDataDTO): void {}
 
     openRedirectSubscriptionPaymentWindow(paymentType: number): void {
       setPayment((prevState: any) => {
@@ -182,14 +182,23 @@ const BuySubscriptionView = () => {
     const makePayment = async () => {
       const proxy = new FeesModelProxy();
 
-      const paymentData = payment;
       console.log(payment);
 
-      const result = await proxy.redirectToSubscriptionPayment('...');
+      const result = await proxy.redirectToSubscriptionPayment(
+        payment!.subTariffId,
+        payment!.monthAmount,
+        payment!.driverId,
+        +payment!.paymentType
+      );
+
       const feesDispatcher = new FeesDispatcher();
       const feesPresenter = new FeesPresenter(feesDispatcher);
 
-      feesDispatcher.showFailedWindow();
+      if (result) {
+        feesDispatcher.showSuccessfulWindow();
+      } else {
+        feesDispatcher.showFailedWindow();
+      }
     };
 
     useEffect(() => {
