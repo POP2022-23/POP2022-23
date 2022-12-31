@@ -1,7 +1,8 @@
-import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
+import {TariffDTO} from '../interfaces/tariff/tariffinterfaces';
+import {FeesDTO, VehicleType} from "../interfaces/fees/feesinterfaces";
 
 export interface IFeesModel {
-  getPaidFeesList: (userId: string) => void;
+  getPaidFeesList: (userId: string) => Promise<Array<FeesDTO> | null>;
   getSubscriptionTariffList: () => Promise<Array<TariffDTO> | null>;
 
   getUnpaidFeesList: (userId: string) => void;
@@ -17,7 +18,41 @@ export interface IFeesModel {
 }
 
 export class FeesModelProxy implements IFeesModel {
-  getPaidFeesList(userId: string) {}
+  private serverUrl = "http://localhost:8080/";
+
+  async getPaidFeesList(userId: string): Promise<Array<FeesDTO> | null> {
+    const mockedResponse: Array<FeesDTO> = [
+      {id: 1, vehicleType: VehicleType.PASSENGER_CAR, isPaid: true, amount: 100.00, date: new Date(2022, 12, 16), roadIds: [
+        1, 2
+        ], tariff: {
+        id: 1,
+          name: "Opłata za przejazd autostradą A1 oraz A4",
+          isValid: true,
+          roadIds: [1,2],
+          rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
+        }},
+      {id: 2, vehicleType: VehicleType.BUS, isPaid: true, amount: 50.00, date: new Date(2022, 12, 23), roadIds: [
+          1
+        ], tariff: {
+          id: 1,
+          name: "Opłata za przejazd autostradą A1 oraz A4",
+          isValid: true,
+          roadIds: [1,2],
+          rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
+        }},
+      {id: 3, vehicleType: VehicleType.PASSENGER_CAR, isPaid: true, amount: 150.00, date: new Date(2022, 12, 8), roadIds: [
+          1, 2
+        ], tariff: {
+          id: 1,
+          name: "Opłata za przejazd autostradą A1 oraz A4",
+          isValid: true,
+          roadIds: [1,2],
+          rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
+        }}
+    ]
+    
+    return mockedResponse;
+  }
 
   private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
     const requestUrl = 'http://localhost:8080/tariff';
@@ -61,9 +96,11 @@ export class FeesModelProxy implements IFeesModel {
     });
   }
 
-  getUnpaidFeesList(userId: string) {}
+  getUnpaidFeesList(userId: string) {
+  }
 
-  redirectToRidePayment() {}
+  redirectToRidePayment() {
+  }
 
   // to do
   async redirectToSubscriptionPayment(subTariffId: number, monthAmount: number, driverId: string, paymentType: number) {
