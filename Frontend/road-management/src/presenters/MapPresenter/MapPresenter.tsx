@@ -5,13 +5,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { MapModelProxy } from "../../models/MapModelProxy";
 
 function MapPresenter() {
+  const navigate = useNavigate();
   const [roadList, setRoadList] = useState<RoadDataDTO[]>(
     new Array<RoadDataDTO>()
   );
   const [selectedDto, setSelectedDto] = useState<RoadDataDTO | undefined>(
     undefined
   );
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const message = searchParams.get("message");
 

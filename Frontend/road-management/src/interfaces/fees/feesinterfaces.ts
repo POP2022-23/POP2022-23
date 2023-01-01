@@ -1,3 +1,5 @@
+import {TariffDTO} from "../tariff/tariffinterfaces";
+
 export type DriverDataDTO = {
   email: string;
   firstName: string;
@@ -5,6 +7,23 @@ export type DriverDataDTO = {
   lastName: string;
   phoneNumber: string;
 };
+
+export enum VehicleType {
+  MOTORBIKE = 1,
+  PASSENGER_CAR = 2,
+  BUS = 3,
+  TRUCK = 4
+}
+
+export type FeesDTO = {
+  amount: number;
+  date: Date;
+  id: number;
+  isPaid: boolean;
+  roadIds: Array<number>;
+  tariff: TariffDTO;
+  vehicleType: VehicleType;
+}
 
 export interface IFeesWindow {
   launchFeeDetailsWindow: () => void;

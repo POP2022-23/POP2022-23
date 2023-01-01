@@ -1,0 +1,36 @@
+﻿.paid-fees-container {
+    display: flex;
+    flex-direction: column;
+    margin: 24px auto;
+    text-align: center;
+}
+
+.paid-fees-title {
+    margin: 0 0 10px 0;
+}
+
+.paid-fees-list-table {
+    margin: 10px auto;
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}
+
+.paid-fees-list-table th {
+    padding: 0 40px;
+}
+
+.paid-fees-list-table td {
+    vertical-align: top;
+}
+
+.paid-fees-details-table {
+    margin: 10px auto;
+}
+
+.paid-fees-details-tr {
+    text-align: left;
+}
+
+.paid-fees-details-td {
+    padding-right:10px;
+}
