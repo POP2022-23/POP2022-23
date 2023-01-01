@@ -10,6 +10,7 @@ import FeesMenu from './views/Fees/FeesMenu';
 import RegisterCarView from './views/RegisterCar/RegisterCarView';
 import BuySubscriptionView from './views/SubscriptionView/BuySubscriptionView';
 import TariffWindow from './views/TariffView/TariffWindow';
+import FeesPresenter, {Action} from "./presenters/FeesPresenter/FeesPresenter";
 
 const router = createBrowserRouter([
   { path: '/', element: <DashboardView /> },
@@ -20,6 +21,8 @@ const router = createBrowserRouter([
   { path: '/tariffs', element: <TariffWindow /> },
   { path: '/subscription', element: <BuySubscriptionView /> },
   { path: '/fees', element: <FeesMenu /> },
+  { path: '/paid-fees', element: <FeesPresenter action={Action.PaidFees}/>},
+  { path: '/unpaid-fees', element: <FeesPresenter action={Action.UnpaidFees}/>},
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
