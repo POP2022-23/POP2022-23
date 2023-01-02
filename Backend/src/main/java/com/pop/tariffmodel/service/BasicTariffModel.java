@@ -53,7 +53,7 @@ public class BasicTariffModel implements ITariffModel {
         tariff.setName(tariffData.getName());
         tariff.setValid(tariffData.isValid());
         final Map<VehicleType, BigDecimal> rates = tariffMapper.mapTariffDtoRatesToTariffRates(tariffData.getRates());
-        tariff.updateTariffRates(rates);
+        tariff.updateTransitRates(rates);
         final List<Road> roads  = tariffMapper.mapRoadIdsToRoadsList(tariffData.getRoadIds());
         tariff.updateRoads(roads);
 

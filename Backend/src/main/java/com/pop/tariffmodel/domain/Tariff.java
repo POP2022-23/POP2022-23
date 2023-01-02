@@ -48,9 +48,9 @@ public class Tariff {
     @JoinColumn(name = "tariff_id")
     private List<Road> roads;
 
-    public void updateTariffRates(Map<VehicleType, BigDecimal> updatedRates) {
+    public void updateTransitRates(Map<VehicleType, BigDecimal> updatedTransitRates) {
         transitRates.clear();
-        transitRates = updatedRates;
+        transitRates = updatedTransitRates;
     }
 
     public void updateRoads(List<Road> updatedRoads) {
