@@ -27,7 +27,7 @@ public class TariffMapper {
         tariff.setValid(tariffDTO.isValid());
         Map<VehicleType, BigDecimal> rates = new HashMap<>();
         tariffDTO.getRates().forEach((n, r)-> rates.put(VehicleType.valueOf(n), r));
-        tariff.setRates(rates);
+        tariff.setTransitRates(rates);
         List<Road> roads  = mapRoadIdsToRoadsList(tariffDTO.getRoadIds());
         tariff.setRoads(roads);
         return tariff;
@@ -51,7 +51,7 @@ public class TariffMapper {
 
     public TariffDTO mapTariffModelToDTO(Tariff tariffModel) {
         Map<String, BigDecimal> rates = new HashMap<>();
-        tariffModel.getRates().forEach((vehicleType, rate) -> rates.put(vehicleType.name(), rate));
+        tariffModel.getTransitRates().forEach((vehicleType, rate) -> rates.put(vehicleType.name(), rate));
 
         return TariffDTO.builder()
                 .id(tariffModel.getId())
