@@ -3,6 +3,8 @@ package com.pop.feesmodel.service.validator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class FeesValidator {
@@ -16,7 +18,7 @@ public class FeesValidator {
     }
         
     private void isFirstNameValid(String firstName) {
-        if(!lastName.matches("[A-Z][a-z]+")) {
+        if(!firstName.matches("[A-Z][a-z]+")) {
             throw new IllegalArgumentException("Incorrect first name entered.");
         } 
     }
@@ -34,7 +36,7 @@ public class FeesValidator {
     }
 
     private void isPhoneNumberValid (String phoneNumber) {
-        if(!phoneNumber.length() == 9 || !phoneNumber.matches("[0-9]+")) {
+        if(!(phoneNumber.length() == 9) || !phoneNumber.matches("[0-9]+")) {
             throw new IllegalArgumentException("Incorrect last name entered.");
         }    
     }

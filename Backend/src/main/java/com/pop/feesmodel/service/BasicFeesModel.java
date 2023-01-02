@@ -7,7 +7,8 @@ import com.pop.feesmodel.repository.FeeJpaRepository;
 import com.pop.feesmodel.service.mapper.FeesMapper;
 import com.pop.feesmodel.service.validator.FeesValidator;
 import com.pop.tariffmodel.dto.TariffDTO;
-import com.pop.tariffmodel.repository.TariffJpaRepository;
+import com.pop.tariffmodel.domain.Tariff;
+import com.pop.tariffmodel.repository.TariffFeeJpaRepository;
 import com.pop.tariffmodel.service.mapper.TariffMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class BasicFeesModel implements IFeesModel {
     private FeesMapper feesMapper;
     private TariffMapper tariffMapper;
     private FeeJpaRepository feeJpaRepository;
-    private TariffJpaRepository tariffJpaRepository;
+    private TariffFeeJpaRepository tariffJpaRepository;
 
     @Override
     public List<FeesDTO> getPaidFeesList(long userId) {
@@ -39,7 +40,7 @@ public class BasicFeesModel implements IFeesModel {
     @Override
     public List<TariffDTO> getSubscriptionTariffsList() {
         List<TariffDTO> subscriptionsList = new ArrayList<>();
-        List<Tariff> subscriptions = feeJpaRepository.findAllByUserId(userId);
+        List<Tariff> subscriptions = tariffJpaRepository.findSubscriptions();
         for(Tariff subscription: subscriptions) {
             TariffDTO subscriptionsDTO = tariffMapper.mapTariffModelToDTO(subscription);
             subscriptionsList.add(subscriptionsDTO);
@@ -51,10 +52,10 @@ public class BasicFeesModel implements IFeesModel {
     public List<FeesDTO> getUnpaidFeesList(long userId) {
         List<FeesDTO> unpaidFeesList = new ArrayList<>();
         List<Fee> unpaidFees = feeJpaRepository.findAllByUserId(userId);
-        for (Fee fee : fees) {
+        for (Fee fee : unpaidFees) {
             FeesDTO unpaidFeesDTO = feesMapper.mapFeeModelToFeesDto(fee);
-            unpaidFeesDTO.setTariff(tariffMapper.mapTariffModelToDTO(fee.getTariff));
-            if(unpaidFeesDTO.isPaidUp == false) {
+            unpaidFeesDTO.setTariff(tariffMapper.mapTariffModelToDTO(fee.getTariff()));
+            if(unpaidFeesDTO.isPaid() == false) {
                unpaidFeesList.add(unpaidFeesDTO);
            }
         }
@@ -63,11 +64,11 @@ public class BasicFeesModel implements IFeesModel {
 
     @Override
     public boolean redirectToRidePayment(long feeId, DriverDataDTO driverData, int paymentType) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean redirectToSubscriptionPayment(long subTariffId, int monthAmount, long driverId, int paymentType) {
-        return false;
+        return true;
     }
 }

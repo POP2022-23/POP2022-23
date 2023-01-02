@@ -13,4 +13,5 @@ public interface FeeJpaRepository extends JpaRepository<Fee, Long> {
             value = "SELECT * FROM Fee AS f WHERE f.user_id = ?1"
     )
     List<Fee> findAllByUserId(long userId);
+
 }
