@@ -10,7 +10,7 @@ public interface FeeJpaRepository extends JpaRepository<Fee, Long> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM Fee AS f WHERE f.user_id = ?1"
+            value = "SELECT * FROM Fee AS f WHERE f.payer_id = ?1"
     )
     List<Fee> findAllByUserId(long userId);
 

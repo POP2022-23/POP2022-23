@@ -29,11 +29,18 @@ public class Tariff {
     private String name;
 
     @ElementCollection
-    @CollectionTable(name = "tariff_rate", joinColumns = @JoinColumn(name = "tariff_id"))
+    @CollectionTable(name = "transit_rate", joinColumns = @JoinColumn(name = "tariff_id"))
     @MapKeyColumn(name = "vehicle_type")
     @MapKeyEnumerated(EnumType.STRING)
     @Column(name = "rate")
-    private Map<VehicleType, BigDecimal> rates = new HashMap<>();
+    private Map<VehicleType, BigDecimal> transitRates = new HashMap<>();
+
+    @ElementCollection
+    @CollectionTable(name = "road_pass_rate", joinColumns = @JoinColumn(name = "tariff_id"))
+    @MapKeyColumn(name = "vehicle_type")
+    @MapKeyEnumerated(EnumType.STRING)
+    @Column(name = "rate")
+    private Map<VehicleType, BigDecimal> roadPassRates = new HashMap<>();
 
     @OneToMany(
             cascade = CascadeType.ALL
@@ -42,8 +49,8 @@ public class Tariff {
     private List<Road> roads;
 
     public void updateTariffRates(Map<VehicleType, BigDecimal> updatedRates) {
-        rates.clear();
-        rates = updatedRates;
+        transitRates.clear();
+        transitRates = updatedRates;
     }
 
     public void updateRoads(List<Road> updatedRoads) {
