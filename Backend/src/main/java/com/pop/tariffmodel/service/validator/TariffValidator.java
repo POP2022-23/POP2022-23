@@ -10,7 +10,8 @@ import java.util.Map;
 public class TariffValidator {
 
     public boolean validateTariff(TariffDTO tariff) {
-        return isNameValid(tariff.getName()) && isRatesValid(tariff.getRates());
+        return isNameValid(tariff.getName()) && isRatesValid(tariff.getRoadPassRates())
+                && isRatesValid(tariff.getTransitRates());
     }
 
     private boolean isNameValid(String tariffName) {

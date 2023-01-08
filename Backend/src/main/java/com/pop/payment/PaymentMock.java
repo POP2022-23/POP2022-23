@@ -5,12 +5,6 @@ public class PaymentMock {
         switch (paymentType) {
             case 1:
                 return true;
-            case 2:
-                return (Math.random() < 0.75);
-            case 3:
-                return (Math.random() < 0.5);
-            case 4:
-                return (Math.random() < 0.25);
             default:
                 return false;
         }

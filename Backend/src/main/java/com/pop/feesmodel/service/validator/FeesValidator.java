@@ -1,5 +1,7 @@
 package com.pop.feesmodel.service.validator;
 
+import com.pop.feesmodel.domain.Fee;
+import com.pop.feesmodel.dto.DriverDataDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -8,36 +10,24 @@ import java.util.List;
 
 @Service
 public class FeesValidator {
-    List<String> months = Arrays.asList("styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec",
-    "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień");
+    public boolean validate(DriverDataDTO driverData) {
+        return isEmailValid(driverData.getEmail()) && isFirstNameValid(driverData.getFirstName())
+                && isLastNameValid(driverData.getLastName()) && isPhoneNumberValid(driverData.getPhoneNumber());
+    }
 
-    private void isEmailValid(String email) {
-        if(!email.contains("@")) {
-            throw new IllegalArgumentException("Incorrect email address entered.");
-        }
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
     }
         
-    private void isFirstNameValid(String firstName) {
-        if(!firstName.matches("[A-Z][a-z]+")) {
-            throw new IllegalArgumentException("Incorrect first name entered.");
-        } 
+    private boolean isFirstNameValid(String firstName) {
+        return firstName.matches("[A-Z][a-z]+");
     }
 
-    private void isMonthValid (LocalDateTime month) {
-        if(!months.contains(month)) {
-            throw new IllegalArgumentException("Incorrect name of the month.");
-        }
+    private boolean isLastNameValid (String lastName) {
+        return lastName.matches("[A-Z][a-z]+");
     }
 
-    private void isLastNameValid (String lastName) {
-        if(!lastName.matches("[A-Z][a-z]+")) {
-            throw new IllegalArgumentException("Incorrect last name entered.");
-        }
-    }
-
-    private void isPhoneNumberValid (String phoneNumber) {
-        if(!(phoneNumber.length() == 9) || !phoneNumber.matches("[0-9]+")) {
-            throw new IllegalArgumentException("Incorrect last name entered.");
-        }    
+    private boolean isPhoneNumberValid (String phoneNumber) {
+        return (phoneNumber.length() == 9) || !phoneNumber.matches("[0-9]+");
     }
 }

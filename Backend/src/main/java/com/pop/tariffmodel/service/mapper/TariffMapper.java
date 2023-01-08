@@ -25,10 +25,13 @@ public class TariffMapper {
         Tariff tariff = new Tariff();
         tariff.setName(tariffDTO.getName());
         tariff.setValid(tariffDTO.isValid());
-        Map<VehicleType, BigDecimal> rates = new HashMap<>();
-        tariffDTO.getRates().forEach((n, r)-> rates.put(VehicleType.valueOf(n), r));
-        tariff.setTransitRates(rates);
-        List<Road> roads  = mapRoadIdsToRoadsList(tariffDTO.getRoadIds());
+        Map<VehicleType, BigDecimal> transitRates = new HashMap<>();
+        Map<VehicleType, BigDecimal> roadPassRates = new HashMap<>();
+        tariffDTO.getTransitRates().forEach((n, r)-> transitRates.put(VehicleType.valueOf(n), r));
+        tariffDTO.getRoadPassRates().forEach((n, r)-> roadPassRates.put(VehicleType.valueOf(n), r));
+        tariff.setTransitRates(transitRates);
+        tariff.setRoadPassRates(roadPassRates);
+        List<Road> roads = mapRoadIdsToRoadsList(tariffDTO.getRoadIds());
         tariff.setRoads(roads);
         return tariff;
     }
@@ -50,14 +53,17 @@ public class TariffMapper {
     }
 
     public TariffDTO mapTariffModelToDTO(Tariff tariffModel) {
-        Map<String, BigDecimal> rates = new HashMap<>();
-        tariffModel.getTransitRates().forEach((vehicleType, rate) -> rates.put(vehicleType.name(), rate));
+        Map<String, BigDecimal> transitRates = new HashMap<>();
+        tariffModel.getTransitRates().forEach((vehicleType, rate) -> transitRates.put(vehicleType.name(), rate));
+        Map<String, BigDecimal> roadPassRates = new HashMap<>();
+        tariffModel.getRoadPassRates().forEach((vehicleType, rate) -> roadPassRates.put(vehicleType.name(), rate));
 
         return TariffDTO.builder()
                 .id(tariffModel.getId())
                 .name(tariffModel.getName())
                 .isValid(tariffModel.isValid())
-                .rates(rates)
+                .transitRates(transitRates)
+                .roadPassRates(roadPassRates)
                 .roadIds(tariffModel.getRoads().stream().map(r -> r.getId()).collect(Collectors.toList()))
                 .build();
     }

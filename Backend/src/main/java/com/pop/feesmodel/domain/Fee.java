@@ -30,6 +30,8 @@ public class Fee {
 
     private boolean isPaidUp;
 
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private FeeType feeType;
 

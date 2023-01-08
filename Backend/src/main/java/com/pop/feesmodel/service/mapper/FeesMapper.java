@@ -19,7 +19,7 @@ public class FeesMapper {
 
     public FeesDTO mapFeeModelToFeesDto(Fee feeModel) {
         return new FeesDTO(feeModel.getId(), feeModel.getAmount(), feeModel.getExpirationDate(),
-                feeModel.getIssueDate(), feeModel.getFeeType(), feeModel.isPaidUp(),
+                feeModel.getIssueDate(), feeModel.getFeeType(), feeModel.getDescription(), feeModel.isPaidUp(),
                 null, feeModel.getVehicleType());
     }
 

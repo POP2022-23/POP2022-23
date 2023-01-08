@@ -20,6 +20,7 @@ public class FeesDTO {
     private LocalDateTime expirationDate;
     private LocalDateTime issueDate;
     private FeeType feeType;
+    private String description;
     private boolean isPaid;
     private TariffDTO tariff;
     private VehicleType vehicleType;

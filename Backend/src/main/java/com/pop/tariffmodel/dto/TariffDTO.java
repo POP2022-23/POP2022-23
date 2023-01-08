@@ -13,6 +13,7 @@ public class TariffDTO {
     private long id;
     private boolean isValid;
     private String name;
-    private Map<String, BigDecimal> rates;
+    private Map<String, BigDecimal> transitRates;
+    private Map<String, BigDecimal> roadPassRates;
     private List<Long> roadIds;
 }
