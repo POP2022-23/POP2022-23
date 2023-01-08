@@ -53,6 +53,12 @@ public class Tariff {
         transitRates = updatedTransitRates;
     }
 
+    public void updateRoadPassRates(Map<VehicleType, BigDecimal> updatedRoadPassRates) {
+        roadPassRates.clear();
+        roadPassRates = updatedRoadPassRates;
+    }
+
+
     public void updateRoads(List<Road> updatedRoads) {
         roads.clear();
         roads.addAll(updatedRoads);

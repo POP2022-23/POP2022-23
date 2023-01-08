@@ -1,5 +1,5 @@
-import {TariffDTO} from '../interfaces/tariff/tariffinterfaces';
-import {FeesDTO} from "../interfaces/fees/feesinterfaces";
+import { FeesDTO } from "../interfaces/fees/feesinterfaces";
+import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
 
 export interface IFeesModel {
   getPaidFeesList: (userId: string) => Promise<Array<FeesDTO> | null>;
@@ -77,7 +77,8 @@ export class FeesModelProxy implements IFeesModel {
         id: item.id,
         isValid: item.isValid,
         name: item.name,
-        rates: item.rates,
+        roadPassRates: item.roadPassRates,
+        transitRates: item.transitRates,
         roadIds: item.roadIds,
       };
       return tariffDTO;

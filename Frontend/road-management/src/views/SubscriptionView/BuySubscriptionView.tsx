@@ -255,66 +255,13 @@ const BuySubscriptionView = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <label>Motocykl</label>
-                      </td>
-                      <td>
-                        <input
-                          name='MOTORBIKE'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('MOTORBIKE')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Samochód osobowy</label>
-                      </td>
-                      <td>
-                        <input
-                          name='PASSENGER_CAR'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('PASSENGER_CAR')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Autobus</label>
-                      </td>
-                      <td>
-                        <input
-                          name='BUS'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('BUS')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Pojazd ciężarowy</label>
-                      </td>
-                      <td>
-                        <input
-                          name='TRUCK'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('TRUCK')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h3>Abonamenty</h3>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
                         <label>Abonament: Motocykl</label>
                       </td>
                       <td>
                         <input
                           name='SUB-MOTORBIKE'
                           disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('MOTORBIKE')}
+                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('MOTORBIKE')}
                         ></input>
                       </td>
                     </tr>
@@ -326,7 +273,7 @@ const BuySubscriptionView = () => {
                         <input
                           name='SUB-PASSENGER_CAR'
                           disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('PASSENGER_CAR')}
+                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('PASSENGER_CAR')}
                         ></input>
                       </td>
                     </tr>
@@ -338,7 +285,7 @@ const BuySubscriptionView = () => {
                         <input
                           name='SUB-BUS'
                           disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('BUS')}
+                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('BUS')}
                         ></input>
                       </td>
                     </tr>
@@ -350,7 +297,7 @@ const BuySubscriptionView = () => {
                         <input
                           name='SUB-TRUCK'
                           disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.rates)).get('TRUCK')}
+                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('TRUCK')}
                         ></input>
                       </td>
                     </tr>

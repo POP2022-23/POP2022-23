@@ -37,20 +37,13 @@ export class TariffModelProxy implements ITariffModel {
       return new Array<TariffDTO>();
     }
 
-    // type TariffDTO2 = {
-    //   id: number;
-    //   valid: boolean;
-    //   name: string;
-    //   rates: Map<string, number>;
-    //   roadIds: Array<number>;
-    // };
-
     return tariffList.map((item) => {
       const tariffDTO = {
         id: item.id,
         isValid: item.isValid,
         name: item.name,
-        rates: item.rates,
+        transitRates: item.transitRates,
+        roadPassRates: item.roadPassRates, // road_pass_rates - abonament
         roadIds: item.roadIds,
       };
       return tariffDTO;
@@ -62,7 +55,8 @@ export class TariffModelProxy implements ITariffModel {
 
     const tariffTransformed = {
       ...tariff,
-      rates: Object.fromEntries(tariff.rates),
+      transitRates: Object.fromEntries(tariff.transitRates),
+      roadPassRates: Object.fromEntries(tariff.roadPassRates),
     };
 
     try {
@@ -90,8 +84,11 @@ export class TariffModelProxy implements ITariffModel {
 
     const tariffTransformed = {
       ...tariff,
-      rates: Object.fromEntries(tariff.rates),
+      transitRates: Object.fromEntries(tariff.transitRates),
+      roadPassRates: Object.fromEntries(tariff.roadPassRates),
     };
+
+    console.log(JSON.stringify(tariffTransformed));
 
     try {
       const response = await fetch(requestUrl, {
