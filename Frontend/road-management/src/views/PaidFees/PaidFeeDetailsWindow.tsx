@@ -1,7 +1,8 @@
 ﻿import React, {useEffect, useState} from "react";
 import {Button, Container} from "react-bootstrap";
-import {FeesDTO, VehicleType} from "../../interfaces/fees/feesinterfaces";
+import {FeesDTO} from "../../interfaces/fees/feesinterfaces";
 import FeeDetailsTable from "./FeeDetailsTable";
+import {FeesModelProxy} from "../../models/FeesModelProxy";
 interface IPaidFeeDetailsWindow {
   feeId: number;
   onReturnClicked: () => void;
@@ -12,24 +13,17 @@ function PaidFeeDetailsWindow({feeId, onReturnClicked}: IPaidFeeDetailsWindow) {
 
   useEffect(() => {
     // Fetching specific fee details;
+    const feesModel = new FeesModelProxy();
 
-    setFeeDetails({
-      id: 1,
-      vehicleType: VehicleType.PASSENGER_CAR,
-      isPaid: true,
-      amount: 100.00,
-      date: new Date(2022, 12, 16),
-      roadIds: [
-        1, 2
-      ],
-      tariff: {
-        id: 1,
-        name: "Opłata za przejazd autostradą A1 oraz A4",
-        isValid: true,
-        roadIds: [1, 2],
-        rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
+    async function fetchPaidFeesList() {
+      const response = await feesModel.getPaidFeesList("1");
+      if (response !== null) {
+        setFeeDetails(response.find(f => f.id == feeId));
       }
-    })
+    }
+    
+    fetchPaidFeesList();
+    
   }, []);
 
   return (

@@ -12,7 +12,7 @@ function FeeListTable({feesList, onViewDetailsClicked}: IFeeListTable) {
     <table className="paid-fees-list-table">
       <thead>
       <tr>
-        <th>Data</th>
+        <th>Data wydania</th>
         <th>Nazwa taryfy</th>
         <th>Typ pojazdu</th>
         <th/>
@@ -20,7 +20,7 @@ function FeeListTable({feesList, onViewDetailsClicked}: IFeeListTable) {
       </thead>
       <tbody>
       {feesList.map(fee => {
-        return <FeeListTableRow key={fee.id} feeId={fee.id} date={fee.date} tariffName={fee.tariff.name}
+        return <FeeListTableRow key={fee.id} feeId={fee.id} issueDate={fee.issueDate} tariffName={fee.tariff.name}
                                 vehicleType={fee.vehicleType} onViewDetailsClicked={onViewDetailsClicked}/>
       })}
       </tbody>

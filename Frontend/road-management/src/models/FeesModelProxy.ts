@@ -1,5 +1,6 @@
 import {TariffDTO} from '../interfaces/tariff/tariffinterfaces';
 import {FeesDTO, VehicleType} from "../interfaces/fees/feesinterfaces";
+import {GetRoadListContract} from "./ApiContracts/mapContracts";
 
 export interface IFeesModel {
   getPaidFeesList: (userId: string) => Promise<Array<FeesDTO> | null>;
@@ -21,37 +22,25 @@ export class FeesModelProxy implements IFeesModel {
   private serverUrl = "http://localhost:8080/";
 
   async getPaidFeesList(userId: string): Promise<Array<FeesDTO> | null> {
-    const mockedResponse: Array<FeesDTO> = [
-      {id: 1, vehicleType: VehicleType.PASSENGER_CAR, isPaid: true, amount: 100.00, date: new Date(2022, 12, 16), roadIds: [
-        1, 2
-        ], tariff: {
-        id: 1,
-          name: "Opłata za przejazd autostradą A1 oraz A4",
-          isValid: true,
-          roadIds: [1,2],
-          rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
-        }},
-      {id: 2, vehicleType: VehicleType.BUS, isPaid: true, amount: 50.00, date: new Date(2022, 12, 23), roadIds: [
-          1
-        ], tariff: {
-          id: 1,
-          name: "Opłata za przejazd autostradą A1 oraz A4",
-          isValid: true,
-          roadIds: [1,2],
-          rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
-        }},
-      {id: 3, vehicleType: VehicleType.PASSENGER_CAR, isPaid: true, amount: 150.00, date: new Date(2022, 12, 8), roadIds: [
-          1, 2
-        ], tariff: {
-          id: 1,
-          name: "Opłata za przejazd autostradą A1 oraz A4",
-          isValid: true,
-          roadIds: [1,2],
-          rates: new Map([["PASSENGER_CAR", 1], ["BUS", 2]])
-        }}
-    ]
-    
-    return mockedResponse;
+    const requestUrl = this.serverUrl + `fees/{userId}/paid?userId=${userId}`;
+
+    try {
+      const response = await fetch(requestUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const jsonResponse = await response.json();
+      return jsonResponse as Array<FeesDTO>;
+    } catch (error: any) {
+      return null;
+    }
   }
 
   private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
