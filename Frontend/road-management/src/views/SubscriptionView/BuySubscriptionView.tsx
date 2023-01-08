@@ -3,18 +3,13 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { DriverDataDTO, IFees, IFeesWindow } from '../../interfaces/fees/feesinterfaces';
 import { TariffDTO } from '../../interfaces/tariff/tariffinterfaces';
-import { FeesModelProxy } from '../../models/FeesModelProxy';
+import { FeesModelProxy, SubscriptionPaymentRequest } from '../../models/FeesModelProxy';
 
 const BuySubscriptionView = () => {
   const [tariffList, setTariffList] = useState<TariffDTO[]>(new Array<TariffDTO>());
   const [selectedTariff, setSelectedTariff] = useState<TariffDTO | undefined>(undefined);
 
-  const [payment, setPayment] = useState<{
-    subTariffId: number;
-    monthAmount: number;
-    driverId: string;
-    paymentType: string;
-  } | null>(null);
+  const [payment, setPayment] = useState<SubscriptionPaymentRequest | null>(null);
 
   const monthsRef = useRef<any>(null);
 
@@ -127,7 +122,7 @@ const BuySubscriptionView = () => {
     e.preventDefault();
     const feesDispatcher = new FeesDispatcher();
 
-    if (!selectedTariff) {
+    if (!selectedTariff || !payment?.vehicleType) {
       feesDispatcher.showMessageAboutUncorrectData();
       return;
     }
@@ -181,18 +176,20 @@ const BuySubscriptionView = () => {
   const SubscriptionPaymentWindow = () => {
     const makePayment = async () => {
       const proxy = new FeesModelProxy();
+      const feesDispatcher = new FeesDispatcher();
+      const feesPresenter = new FeesPresenter(feesDispatcher);
 
       console.log(payment);
 
-      const result = await proxy.redirectToSubscriptionPayment(
-        payment!.subTariffId,
-        payment!.monthAmount,
-        payment!.driverId,
-        +payment!.paymentType
-      );
+      const result = await proxy.redirectToSubscriptionPayment({
+        subTariffId: +payment!.subTariffId,
+        monthAmount: +payment!.monthAmount,
+        driverId: +payment!.driverId,
+        paymentType: +payment!.paymentType,
+        vehicleType: payment!.vehicleType,
+      });
 
-      const feesDispatcher = new FeesDispatcher();
-      const feesPresenter = new FeesPresenter(feesDispatcher);
+      console.log(result);
 
       if (result) {
         feesDispatcher.showSuccessfulWindow();
@@ -243,68 +240,93 @@ const BuySubscriptionView = () => {
           </DropdownButton>
 
           {selectedTariff !== undefined && (
-            <Form className='d-flex justify-content-center' style={{ margin: '30px' }}>
-              <Fragment key={selectedTariff.id}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Kategoria samochodu</th>
-                      <th>Cena za kilometr</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <label>Abonament: Motocykl</label>
-                      </td>
-                      <td>
-                        <input
-                          name='SUB-MOTORBIKE'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('MOTORBIKE')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Abonament: Samochód osobowy</label>
-                      </td>
-                      <td>
-                        <input
-                          name='SUB-PASSENGER_CAR'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('PASSENGER_CAR')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Abonament: Autobus</label>
-                      </td>
-                      <td>
-                        <input
-                          name='SUB-BUS'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('BUS')}
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Abonament: Pojazd ciężarowy</label>
-                      </td>
-                      <td>
-                        <input
-                          name='SUB-TRUCK'
-                          disabled={true}
-                          defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('TRUCK')}
-                        ></input>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Fragment>
-            </Form>
+            <Fragment>
+              <h2>Abonamenty - cena za miesiąc:</h2>
+              <Form className='d-flex justify-content-center' style={{ margin: '30px' }}>
+                <Fragment key={selectedTariff.id}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Kategoria samochodu</th>
+                        <th>Cena za kilometr</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label>Abonament: Motocykl</label>
+                        </td>
+                        <td>
+                          <input
+                            name='SUB-MOTORBIKE'
+                            disabled={true}
+                            defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('MOTORBIKE')}
+                          ></input>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Abonament: Samochód osobowy</label>
+                        </td>
+                        <td>
+                          <input
+                            name='SUB-PASSENGER_CAR'
+                            disabled={true}
+                            defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('PASSENGER_CAR')}
+                          ></input>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Abonament: Autobus</label>
+                        </td>
+                        <td>
+                          <input
+                            name='SUB-BUS'
+                            disabled={true}
+                            defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('BUS')}
+                          ></input>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Abonament: Pojazd ciężarowy</label>
+                        </td>
+                        <td>
+                          <input
+                            name='SUB-TRUCK'
+                            disabled={true}
+                            defaultValue={new Map(Object.entries(selectedTariff!.roadPassRates)).get('TRUCK')}
+                          ></input>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Fragment>
+              </Form>
+
+              <DropdownButton
+                style={{ marginTop: '20px' }}
+                variant={'info'}
+                title={'Rodzaj pojazdu'}
+                onSelect={(item) => {
+                  setPayment((prevState: any) => {
+                    return {
+                      ...prevState,
+                      vehicleType: item,
+                    };
+                  });
+                }}
+              >
+                {['MOTORBIKE', 'PASSENGER_CAR', 'TRUCK', 'BUS'].map((item) => {
+                  return (
+                    <Dropdown.Item key={item} eventKey={item}>
+                      {item}
+                    </Dropdown.Item>
+                  );
+                })}
+              </DropdownButton>
+            </Fragment>
           )}
 
           <div className='d-flex justify-content-center'>
