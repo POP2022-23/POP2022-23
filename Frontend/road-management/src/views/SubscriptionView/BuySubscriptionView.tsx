@@ -211,6 +211,7 @@ const BuySubscriptionView = () => {
 
     return (
       <div style={{ textAlign: 'center' }}>
+        <p>Płatność...</p>
         <Button onClick={handleGoBack}>Powrót do zakupu abonamentu</Button>
       </div>
     );
