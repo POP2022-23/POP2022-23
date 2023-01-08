@@ -1,5 +1,6 @@
 package com.pop.feesmodel.controller;
 
+import com.pop.feesmodel.dto.FeeDetailsDTO;
 import com.pop.feesmodel.dto.FeesDTO;
 import com.pop.feesmodel.dto.RidePaymentRequest;
 import com.pop.feesmodel.dto.SubscriptionPaymentRequest;
@@ -30,9 +31,9 @@ public class FeesModelRestController {
     }
 
     @GetMapping("/{feeId}")
-    public ResponseEntity<FeesDTO> getFeeDetails(@PathVariable long feeId) {
+    public ResponseEntity<FeeDetailsDTO> getFeeDetails(@PathVariable long feeId) {
         try {
-            FeesDTO feeDetails = feesModel.getFeeDetails(feeId);
+            FeeDetailsDTO feeDetails = feesModel.getFeeDetails(feeId);
             return new ResponseEntity<>(feeDetails, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

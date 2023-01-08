@@ -3,6 +3,7 @@ package com.pop.feesmodel.service;
 import com.pop.feesmodel.domain.Fee;
 import com.pop.feesmodel.domain.FeeType;
 import com.pop.feesmodel.dto.DriverDataDTO;
+import com.pop.feesmodel.dto.FeeDetailsDTO;
 import com.pop.feesmodel.dto.FeesDTO;
 import com.pop.feesmodel.repository.FeeJpaRepository;
 import com.pop.feesmodel.service.mapper.FeesMapper;
@@ -39,17 +40,16 @@ public class BasicFeesModel implements IFeesModel {
         List<Fee> fees = feeJpaRepository.findAllByUserId(userId, true);
         for(Fee fee : fees) {
             FeesDTO feesDTO = feesMapper.mapFeeModelToFeesDto(fee);
-            feesDTO.setTariff(tariffMapper.mapTariffModelToDTO(fee.getTariff()));
             feesList.add(feesDTO);
         }
         return feesList;
     }
 
     @Override
-    public FeesDTO getFeeDetails(long feeId) {
+    public FeeDetailsDTO getFeeDetails(long feeId) {
         Fee feeEntity = feeJpaRepository.findById(feeId).orElseThrow();
-        FeesDTO feeDto = feesMapper.mapFeeModelToFeesDto(feeEntity);
-        return feeDto;
+        TariffDTO tariffDTO = tariffMapper.mapTariffModelToDTO(feeEntity.getTariff());
+        return feesMapper.mapFeeModelToFeeDetailsDto(feeEntity, tariffDTO);
     }
 
     @Override
@@ -69,7 +69,6 @@ public class BasicFeesModel implements IFeesModel {
         List<Fee> unpaidFees = feeJpaRepository.findAllByUserId(userId, false);
         for (Fee fee : unpaidFees) {
             FeesDTO unpaidFeesDTO = feesMapper.mapFeeModelToFeesDto(fee);
-            unpaidFeesDTO.setTariff(tariffMapper.mapTariffModelToDTO(fee.getTariff()));
             unpaidFeesList.add(unpaidFeesDTO);
         }
         return unpaidFeesList;
