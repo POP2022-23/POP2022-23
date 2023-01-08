@@ -1,7 +1,6 @@
 ﻿import React from 'react'
 import {FeesDTO} from "../../interfaces/fees/feesinterfaces";
 import FeeDetailsTableRow from "./FeeDetailsTableRow";
-import {VehicleTypeStrings} from "../../utils/enumExtensions";
 
 interface IFeeDetailsTable {
     feeDetails: FeesDTO | undefined;
@@ -12,9 +11,10 @@ function FeeDetailsTable({feeDetails}: IFeeDetailsTable) {
         (
             <table className="paid-fees-details-table">
                 <tbody>
-                <FeeDetailsTableRow label="Kwota" value={`${feeDetails.amount} zł`}/>
-                <FeeDetailsTableRow label="Data wystawienia" value={feeDetails.issueDate.split('T')[0]}/>
-                <FeeDetailsTableRow label="Data opłacenia" value={feeDetails.expirationDate.split('T')[0]}/>
+                <FeeDetailsTableRow label="Kwota:" value={`${feeDetails.amount} zł`}/>
+                <FeeDetailsTableRow label="Data wystawienia:" value={feeDetails.issueDate.split('T')[0]}/>
+                <FeeDetailsTableRow label="Data opłacenia:" value={feeDetails.expirationDate.split('T')[0]}/>
+                <FeeDetailsTableRow label="Opis:" value={feeDetails.description}/>
                 </tbody>
             </table>
         )

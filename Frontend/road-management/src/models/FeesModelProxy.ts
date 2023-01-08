@@ -1,6 +1,5 @@
 import {TariffDTO} from '../interfaces/tariff/tariffinterfaces';
-import {FeesDTO, VehicleType} from "../interfaces/fees/feesinterfaces";
-import {GetRoadListContract} from "./ApiContracts/mapContracts";
+import {FeesDTO} from "../interfaces/fees/feesinterfaces";
 
 export interface IFeesModel {
   getPaidFeesList: (userId: string) => Promise<Array<FeesDTO> | null>;
@@ -22,7 +21,7 @@ export class FeesModelProxy implements IFeesModel {
   private serverUrl = "http://localhost:8080/";
 
   async getPaidFeesList(userId: string): Promise<Array<FeesDTO> | null> {
-    const requestUrl = this.serverUrl + `fees/{userId}/paid?userId=${userId}`;
+    const requestUrl = this.serverUrl + `fees/${userId}/paid`;
 
     try {
       const response = await fetch(requestUrl, {

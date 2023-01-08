@@ -26,6 +26,7 @@ export type FeesDTO = {
     expirationDate: string;
     issueDate: string;
     feeType: FeeType;
+    description: string;
     paid: boolean;
     tariff: TariffDTO;
     vehicleType: VehicleType;
