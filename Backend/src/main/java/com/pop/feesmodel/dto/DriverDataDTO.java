@@ -1,12 +1,12 @@
 package com.pop.feesmodel.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
+@AllArgsConstructor
 public class DriverDataDTO {
     private long id;
     private String email;

@@ -24,4 +24,5 @@ public class FeesDTO {
     private boolean isPaid;
     private TariffDTO tariff;
     private VehicleType vehicleType;
+    private DriverDataDTO driverData;
 }
