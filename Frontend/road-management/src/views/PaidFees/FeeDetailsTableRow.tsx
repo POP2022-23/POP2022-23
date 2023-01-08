@@ -8,7 +8,7 @@ interface IProps {
 function FeeDetailsTableRow({label, value}: IProps) {
   return (
     <tr className="paid-fees-details-tr">
-      <td className="paid-fees-details-td">
+      <td>
         <label>{label}</label>
       </td>
       <td>

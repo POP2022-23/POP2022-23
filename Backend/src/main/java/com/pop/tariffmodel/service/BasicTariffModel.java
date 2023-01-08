@@ -55,7 +55,7 @@ public class BasicTariffModel implements ITariffModel {
         final Map<VehicleType, BigDecimal> transitRates = tariffMapper.mapTariffDtoRatesToTariffRates(tariffData.getTransitRates());
         tariff.updateTransitRates(transitRates);
         final Map<VehicleType, BigDecimal> roadPassRates = tariffMapper.mapTariffDtoRatesToTariffRates(tariffData.getRoadPassRates());
-        tariff.updateTransitRates(roadPassRates);
+        tariff.updateRoadPassRates(roadPassRates);
         final List<Road> roads  = tariffMapper.mapRoadIdsToRoadsList(tariffData.getRoadIds());
         tariff.updateRoads(roads);
 

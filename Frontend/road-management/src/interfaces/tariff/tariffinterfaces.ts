@@ -2,7 +2,8 @@ export type TariffDTO = {
   id: number;
   isValid: boolean;
   name: string;
-  rates: Map<string, number>;
+  transitRates: Map<string, number>;
+  roadPassRates: Map<string, number>;
   roadIds: Array<number>;
 };
 

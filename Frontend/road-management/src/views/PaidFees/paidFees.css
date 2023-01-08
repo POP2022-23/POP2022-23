@@ -23,14 +23,16 @@
     vertical-align: top;
 }
 
+.paid-fees-details-tr td {
+    padding-right:10px;
+    max-width: 360px;
+}
+
 .paid-fees-details-table {
+    max-width: 720px;
     margin: 10px auto;
 }
 
 .paid-fees-details-tr {
     text-align: left;
-}
-
-.paid-fees-details-td {
-    padding-right:10px;
 }

@@ -1,6 +1,13 @@
-import {TariffDTO} from '../interfaces/tariff/tariffinterfaces';
-import {FeesDTO, VehicleType} from "../interfaces/fees/feesinterfaces";
-import {GetRoadListContract} from "./ApiContracts/mapContracts";
+import { FeesDTO } from '../interfaces/fees/feesinterfaces';
+import { TariffDTO } from '../interfaces/tariff/tariffinterfaces';
+
+export type SubscriptionPaymentRequest = {
+  subTariffId: number;
+  monthAmount: number;
+  driverId: number;
+  paymentType: number;
+  vehicleType: string;
+};
 
 export interface IFeesModel {
   getPaidFeesList: (userId: string) => Promise<Array<FeesDTO> | null>;
@@ -10,25 +17,20 @@ export interface IFeesModel {
 
   redirectToRidePayment: () => void;
 
-  redirectToSubscriptionPayment: (
-    subTariffId: number,
-    monthAmount: number,
-    driverId: string,
-    paymentType: number
-  ) => Promise<Boolean>;
+  redirectToSubscriptionPayment: (payment: SubscriptionPaymentRequest) => Promise<Boolean>;
 }
 
 export class FeesModelProxy implements IFeesModel {
-  private serverUrl = "http://localhost:8080/";
+  private serverUrl = 'http://localhost:8080/';
 
   async getPaidFeesList(userId: string): Promise<Array<FeesDTO> | null> {
-    const requestUrl = this.serverUrl + `fees/{userId}/paid?userId=${userId}`;
+    const requestUrl = this.serverUrl + `fees/${userId}/paid`;
 
     try {
       const response = await fetch(requestUrl, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -44,7 +46,7 @@ export class FeesModelProxy implements IFeesModel {
   }
 
   private async getTariffListFromServer(): Promise<Array<TariffDTO> | null> {
-    const requestUrl = 'http://localhost:8080/tariff';
+    const requestUrl = 'http://localhost:8080/tariff'; // should be fees
 
     try {
       const response = await fetch(requestUrl, {
@@ -78,26 +80,38 @@ export class FeesModelProxy implements IFeesModel {
         id: item.id,
         isValid: item.isValid,
         name: item.name,
-        rates: item.rates,
+        roadPassRates: item.roadPassRates,
+        transitRates: item.transitRates,
         roadIds: item.roadIds,
       };
       return tariffDTO;
     });
   }
 
-  getUnpaidFeesList(userId: string) {
-  }
+  getUnpaidFeesList(userId: string) {}
 
-  redirectToRidePayment() {
-  }
+  redirectToRidePayment() {}
 
-  // to do
-  async redirectToSubscriptionPayment(subTariffId: number, monthAmount: number, driverId: string, paymentType: number) {
-    console.log('redirectToSubscriptionPayment');
-    console.log(subTariffId, monthAmount, driverId, paymentType);
-    if (paymentType === 0) {
-      return true;
-    } else {
+  async redirectToSubscriptionPayment(payment: SubscriptionPaymentRequest): Promise<boolean> {
+    const requestUrl = 'http://localhost:8080/fees/roadpass';
+
+    try {
+      const response = await fetch(requestUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payment),
+      });
+
+      if (!response.ok) {
+        return false;
+      }
+
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      return jsonResponse;
+    } catch (error: any) {
       return false;
     }
   }
