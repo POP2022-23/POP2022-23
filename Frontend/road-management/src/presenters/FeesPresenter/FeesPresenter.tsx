@@ -32,7 +32,7 @@ function FeesPresenter({ action }: IFeesPresenter) {
     }
 
     async function fetchUnpaidFeesList() {
-      const response = await feesModel.getPaidFeesList("1");
+      const response = await feesModel.getUnpaidFeesList("1");
       if (response !== null) {
         setUnpaidFees(response);
       }
