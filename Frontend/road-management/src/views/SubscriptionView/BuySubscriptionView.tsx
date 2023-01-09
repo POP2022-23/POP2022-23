@@ -17,6 +17,8 @@ const BuySubscriptionView = () => {
 
   const [windowToShow, setWindowToShow] = useState<'subscription' | 'choosePayment' | 'paymentResult'>('subscription');
 
+  const [chosenVehicle, setChosenVehicle] = useState('');
+
   const handleRoadSelected = (item: string | null) => {
     if (item !== null) {
       const tl = tariffList.find((tl) => tl.id!.toString() === item);
@@ -129,7 +131,7 @@ const BuySubscriptionView = () => {
 
     const feesPresenter = new FeesPresenter(feesDispatcher);
 
-    feesPresenter.openSubscriptionPaymentWindow(selectedTariff!.id || 0, monthsRef.current.value, '2');
+    feesPresenter.openSubscriptionPaymentWindow(selectedTariff!.id || 0, monthsRef.current.value, '1');
   };
 
   // "Okienka" - dałem je tutaj aby łatwiej było zarządzać stanem
@@ -154,6 +156,7 @@ const BuySubscriptionView = () => {
 
     return (
       <div style={{ textAlign: 'center' }}>
+        <p>Wybrano opcję płatności: {paymentOption}</p>
         <DropdownButton
           id={'road-dropdown'}
           variant={'info'}
@@ -242,14 +245,13 @@ const BuySubscriptionView = () => {
 
           {selectedTariff !== undefined && (
             <Fragment>
-              <h2>Abonamenty - cena za miesiąc:</h2>
               <Form className='d-flex justify-content-center' style={{ margin: '30px' }}>
                 <Fragment key={selectedTariff.id}>
                   <table>
                     <thead>
                       <tr>
                         <th>Kategoria samochodu</th>
-                        <th>Cena za kilometr</th>
+                        <th>Cena</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -306,11 +308,14 @@ const BuySubscriptionView = () => {
                 </Fragment>
               </Form>
 
+              <p>Wybrano typ pojazdu: {chosenVehicle}</p>
+
               <DropdownButton
                 style={{ marginTop: '20px' }}
                 variant={'info'}
                 title={'Rodzaj pojazdu'}
                 onSelect={(item) => {
+                  setChosenVehicle(item || '');
                   setPayment((prevState: any) => {
                     return {
                       ...prevState,
