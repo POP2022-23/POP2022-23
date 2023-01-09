@@ -18,8 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 public class FeesMapper {
 
-    private final RoadJpaRepository roadJpaRepository;
-
     public FeesDTO mapFeeModelToFeesDto(Fee feeModel) {
         return new FeesDTO(feeModel.getId(), feeModel.getIssueDate(),
                 feeModel.getTariff().getName(), feeModel.getVehicleType());
@@ -30,16 +28,6 @@ public class FeesMapper {
         return new FeeDetailsDTO(feeModel.getId(), feeModel.getAmount(), feeModel.getExpirationDate(),
                 feeModel.getIssueDate(), feeModel.getFeeType(), feeModel.getDescription(), feeModel.isPaidUp(), tariffDTO,
                 feeModel.getVehicleType(), driverData);
-    }
-
-    public List<Road> mapRoadIdsToRoadList(List<Long> roadIds) {
-        List<Road> roads  = new ArrayList<>();
-        roadIds.forEach(roadId ->{
-            roads.add(roadJpaRepository.findById(roadId).orElseThrow(
-                () -> new RuntimeException("Road with id " + roadId + " does not exist")
-            ));
-        });
-        return roads;
     }
 
     private DriverDataDTO mapDriverModelToDto(User user) {
