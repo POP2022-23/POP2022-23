@@ -14,7 +14,7 @@ export interface IFeesModel {
     getFeeDetails: (feeId: number) => Promise<FeesDetailsDTO | null>;
     getSubscriptionTariffList: () => Promise<Array<TariffDTO> | null>;
 
-    getUnpaidFeesList: (userId: string) => void;
+    getUnpaidFeesList: (userId: string) => Promise<Array<FeesDTO> | null>;
 
     redirectToRidePayment: () => void;
 
@@ -111,7 +111,26 @@ export class FeesModelProxy implements IFeesModel {
         });
     }
 
-    getUnpaidFeesList(userId: string) {
+    async getUnpaidFeesList(userId: string) {
+        const requestUrl = this.serverUrl + `fees/${userId}/unpaid`;
+
+        try {
+            const response = await fetch(requestUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                return null;
+            }
+
+            const jsonResponse = await response.json();
+            return jsonResponse as Array<FeesDTO>;
+        } catch (error: any) {
+            return null;
+        }
     }
 
     redirectToRidePayment() {
