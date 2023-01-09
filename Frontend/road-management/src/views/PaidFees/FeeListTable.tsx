@@ -20,7 +20,7 @@ function FeeListTable({feesList, onViewDetailsClicked}: IFeeListTable) {
       </thead>
       <tbody>
       {feesList.map(fee => {
-        return <FeeListTableRow key={fee.id} feeId={fee.id} issueDate={fee.issueDate} tariffName={fee.tariff.name}
+        return <FeeListTableRow key={fee.id} feeId={fee.id} issueDate={fee.issueDate} tariffName={fee.tariffName}
                                 vehicleType={fee.vehicleType} onViewDetailsClicked={onViewDetailsClicked}/>
       })}
       </tbody>

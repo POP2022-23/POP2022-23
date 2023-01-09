@@ -22,14 +22,43 @@ export enum FeeType {
 
 export type FeesDTO = {
     id: number;
-    amount: number;
-    expirationDate: string;
     issueDate: string;
-    feeType: FeeType;
-    description: string;
-    paid: boolean;
-    tariff: TariffDTO;
+    tariffName: string;
     vehicleType: VehicleType;
+}
+
+export type FeesDetailsDTO = {
+    amount: number,
+    description: string,
+    driverData: {
+        email: string,
+        firstName: string,
+        id: number,
+        lastName: string,
+        phoneNumber: string
+    },
+    expirationDate: string,
+    feeType: FeeType,
+    id: number,
+    issueDate: string,
+    paid: boolean,
+    tariff: {
+        id: number,
+        name: string,
+        roadIds: number[],
+        roadPassRates: {
+            additionalProp1: number,
+            additionalProp2: number,
+            additionalProp3: number
+        },
+        transitRates: {
+            additionalProp1: number,
+            additionalProp2: number,
+            additionalProp3: number
+        },
+        valid: true
+    },
+    vehicleType: VehicleType
 }
 
 export interface IFeesWindow {

@@ -1,6 +1,6 @@
 ﻿import React, {useEffect, useState} from "react";
 import {Button, Container} from "react-bootstrap";
-import {FeesDTO} from "../../interfaces/fees/feesinterfaces";
+import {FeesDetailsDTO} from "../../interfaces/fees/feesinterfaces";
 import FeeDetailsTable from "./FeeDetailsTable";
 import {FeesModelProxy} from "../../models/FeesModelProxy";
 interface IPaidFeeDetailsWindow {
@@ -9,16 +9,15 @@ interface IPaidFeeDetailsWindow {
 }
 
 function PaidFeeDetailsWindow({feeId, onReturnClicked}: IPaidFeeDetailsWindow) {
-  const [feeDetails, setFeeDetails] = useState<FeesDTO | undefined>();
+  const [feeDetails, setFeeDetails] = useState<FeesDetailsDTO | undefined>();
 
   useEffect(() => {
-    // Fetching specific fee details;
     const feesModel = new FeesModelProxy();
 
     async function fetchPaidFeesList() {
-      const response = await feesModel.getPaidFeesList("1");
+      const response = await feesModel.getFeeDetails(feeId);
       if (response !== null) {
-        setFeeDetails(response.find(f => f.id == feeId));
+        setFeeDetails(response);
       }
     }
     
