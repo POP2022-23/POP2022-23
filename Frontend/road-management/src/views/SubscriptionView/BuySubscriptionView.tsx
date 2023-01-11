@@ -178,6 +178,7 @@ const BuySubscriptionView = () => {
 
   const SubscriptionPaymentWindow = () => {
     const makePayment = async () => {
+      console.log('making payment');
       const proxy = new FeesModelProxy();
       const feesDispatcher = new FeesDispatcher();
       const feesPresenter = new FeesPresenter(feesDispatcher);
@@ -201,9 +202,9 @@ const BuySubscriptionView = () => {
       }
     };
 
-    useEffect(() => {
-      makePayment();
-    }, []);
+    // useEffect(() => {
+    //   makePayment();
+    // }, []);
 
     const handleGoBack = () => {
       const feesDispatcher = new FeesDispatcher();
@@ -215,6 +216,7 @@ const BuySubscriptionView = () => {
     return (
       <div style={{ textAlign: 'center' }}>
         <p>Płatność...</p>
+        <Button onClick={makePayment}>Dokonaj finalizacji płatności</Button>
         <Button onClick={handleGoBack}>Powrót do zakupu abonamentu</Button>
       </div>
     );
