@@ -7,20 +7,20 @@ import UnpaidFeeListTable from "./UnpaidFeeListTable";
 interface IUnpaidFeesListWindow {
   feesList: Array<FeesDTO>;
   onReturnClicked: () => void;
-  onMakePaymentClicked: (feeId: number) => void;
+  onViewUnpaidFeeDetailsClicked: (feeId: number) => void;
 }
 
 function UnpaidFeesListWindow({
   feesList,
   onReturnClicked,
-  onMakePaymentClicked,
+  onViewUnpaidFeeDetailsClicked,
 }: IUnpaidFeesListWindow) {
   return (
     <Container className="paid-fees-container">
       <h1 className="paid-fees-title">Nieopłacone opłaty</h1>
       <UnpaidFeeListTable
         feesList={feesList}
-        onMakePaymentClicked={onMakePaymentClicked}
+        onViewUnpaidFeeDetailsClicked={onViewUnpaidFeeDetailsClicked}
       />
       <Container>
         <Button onClick={onReturnClicked}>Wróć do menu</Button>

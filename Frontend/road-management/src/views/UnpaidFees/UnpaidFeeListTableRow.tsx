@@ -8,7 +8,7 @@ interface IProps {
   issueDate: string;
   tariffName: string;
   vehicleType: VehicleType;
-  onMakePaymentClicked: (feeId: number) => void;
+  onViewUnpaidFeeDetailsClicked: (feeId: number) => void;
 }
 
 function UnpaidFeeListTableRow({
@@ -16,7 +16,7 @@ function UnpaidFeeListTableRow({
   issueDate,
   tariffName,
   vehicleType,
-  onMakePaymentClicked,
+  onViewUnpaidFeeDetailsClicked,
 }: IProps) {
   return (
     <tr>
@@ -24,7 +24,9 @@ function UnpaidFeeListTableRow({
       <td>{tariffName}</td>
       <td>{VehicleTypeStrings[vehicleType]}</td>
       <td>
-        <Button onClick={() => onMakePaymentClicked(feeId)}>Opłać</Button>
+        <Button onClick={() => onViewUnpaidFeeDetailsClicked(feeId)}>
+          Opłać
+        </Button>
       </td>
     </tr>
   );
