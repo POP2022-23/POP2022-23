@@ -139,7 +139,7 @@ const TariffWindow = () => {
         {tariffList.map((tl) => {
           return (
             <Dropdown.Item key={tl.id} eventKey={tl.id}>
-              {tl.roadIds.join(',')}
+              {`${tl.name} dla dróg o id: ${tl.roadIds.join(',')}`}
             </Dropdown.Item>
           );
         })}
