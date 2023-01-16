@@ -25,7 +25,7 @@ function UnpaidFeeListTableRow({
       <td>{VehicleTypeStrings[vehicleType]}</td>
       <td>
         <Button onClick={() => onViewUnpaidFeeDetailsClicked(feeId)}>
-          Zobacz szczegóły
+          Szczegóły
         </Button>
       </td>
     </tr>

@@ -22,6 +22,7 @@ function FeesPresenter({ action }: IFeesPresenter) {
   const [unpaidFees, setUnpaidFees] = useState<FeesDTO[]>(new Array<FeesDTO>());
   const [selectedFeeId, setSelectedFeeId] = useState<number | undefined>();
   const [makePayment, setMakePayment] = useState<boolean>(false);
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean | undefined>();
 
   useEffect(() => {
     const feesModel = new FeesModelProxy();
@@ -61,8 +62,20 @@ function FeesPresenter({ action }: IFeesPresenter) {
     setSelectedFeeId(feeId);
   }
 
-  function onMakePaymentClicked() {
+  async function onMakePaymentClicked(
+    name: String,
+    surname: String,
+    email: String,
+    phoneNumber: String,
+    paymentType: String
+  ) {
     setMakePayment(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    setMakePayment(false);
+
+    setPaymentSuccess(paymentType !== "card");
   }
 
   function onReturnToPaidFeeListClicked() {
@@ -110,7 +123,15 @@ function FeesPresenter({ action }: IFeesPresenter) {
   }
 
   function openMakePaymentWindow(): JSX.Element {
-    return <h1>Okno płatności</h1>;
+    return <h1>Przekierowanie do płatności</h1>;
+  }
+
+  function openPaymentSuccessfulWindow(): JSX.Element {
+    return <h1>Płatność powiodła się</h1>;
+  }
+
+  function openPaymentFailedWindow(): JSX.Element {
+    return <h1>Płatność nie powiodła się</h1>;
   }
 
   function render(selectedAction: Action): JSX.Element {
@@ -122,6 +143,12 @@ function FeesPresenter({ action }: IFeesPresenter) {
       }
 
       case Action.UnpaidFees:
+        if (paymentSuccess === true) {
+          return openPaymentSuccessfulWindow();
+        } else if (paymentSuccess === false) {
+          return openPaymentFailedWindow();
+        }
+
         if (makePayment) {
           return openMakePaymentWindow();
         }
