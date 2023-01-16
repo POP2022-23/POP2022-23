@@ -5,6 +5,7 @@ import { FeesDTO } from "../../interfaces/fees/feesinterfaces";
 import { useNavigate } from "react-router-dom";
 import PaidFeeDetailsWindow from "../../views/PaidFees/PaidFeeDetailsWindow";
 import UnpaidFeesListWindow from "../../views/UnpaidFees/UnpaidFeesListWindow";
+import UnpaidFeeDetailsWindow from "../../views/UnpaidFees/UnpaidFeeDetailsWindow";
 
 export enum Action {
   PaidFees,
@@ -20,6 +21,7 @@ function FeesPresenter({ action }: IFeesPresenter) {
   const [feesList, setFeesList] = useState<FeesDTO[]>(new Array<FeesDTO>());
   const [unpaidFees, setUnpaidFees] = useState<FeesDTO[]>(new Array<FeesDTO>());
   const [selectedFeeId, setSelectedFeeId] = useState<number | undefined>();
+  const [makePayment, setMakePayment] = useState<boolean>(false);
 
   useEffect(() => {
     const feesModel = new FeesModelProxy();
@@ -55,11 +57,16 @@ function FeesPresenter({ action }: IFeesPresenter) {
     setSelectedFeeId(feeId);
   }
 
-  function onMakePaymentClicked(feeId: number) {
+  function onViewUnpaidFeeDetailsClicked(feeId: number) {
     setSelectedFeeId(feeId);
   }
 
+  function onMakePaymentClicked() {
+    setMakePayment(true);
+  }
+
   function onReturnToPaidFeeListClicked() {
+    setMakePayment(false);
     setSelectedFeeId(undefined);
   }
 
@@ -87,13 +94,23 @@ function FeesPresenter({ action }: IFeesPresenter) {
       <UnpaidFeesListWindow
         feesList={unpaidFees}
         onReturnClicked={onReturnToMainMenuClicked}
+        onViewUnpaidFeeDetailsClicked={onViewUnpaidFeeDetailsClicked}
+      />
+    );
+  }
+
+  function openUnpaidFeeDetailsWindow(feeId: number): JSX.Element {
+    return (
+      <UnpaidFeeDetailsWindow
+        feeId={feeId}
+        onReturnClicked={onReturnToPaidFeeListClicked}
         onMakePaymentClicked={onMakePaymentClicked}
       />
     );
   }
 
-  function openMakePaymentWindow(feeId: number): JSX.Element {
-    return <h1>Do zaimplementowania w sprincie 4</h1>;
+  function openMakePaymentWindow(): JSX.Element {
+    return <h1>Okno płatności</h1>;
   }
 
   function render(selectedAction: Action): JSX.Element {
@@ -105,8 +122,12 @@ function FeesPresenter({ action }: IFeesPresenter) {
       }
 
       case Action.UnpaidFees:
+        if (makePayment) {
+          return openMakePaymentWindow();
+        }
+
         return selectedFeeId !== undefined
-          ? openMakePaymentWindow(selectedFeeId)
+          ? openUnpaidFeeDetailsWindow(selectedFeeId)
           : openUnpaidFeesListWindow();
     }
   }

@@ -4,10 +4,13 @@ import UnpaidFeeListTableRow from "./UnpaidFeeListTableRow";
 
 interface IFeeListTable {
   feesList: Array<FeesDTO>;
-  onMakePaymentClicked: (feeId: number) => void;
+  onViewUnpaidFeeDetailsClicked: (feeId: number) => void;
 }
 
-function UnpaidFeeListTable({ feesList, onMakePaymentClicked }: IFeeListTable) {
+function UnpaidFeeListTable({
+  feesList,
+  onViewUnpaidFeeDetailsClicked,
+}: IFeeListTable) {
   return (
     <table className="paid-fees-list-table">
       <thead>
@@ -27,7 +30,7 @@ function UnpaidFeeListTable({ feesList, onMakePaymentClicked }: IFeeListTable) {
               issueDate={fee.issueDate}
               tariffName={fee.tariffName}
               vehicleType={fee.vehicleType}
-              onMakePaymentClicked={onMakePaymentClicked}
+              onViewUnpaidFeeDetailsClicked={onViewUnpaidFeeDetailsClicked}
             />
           );
         })}
