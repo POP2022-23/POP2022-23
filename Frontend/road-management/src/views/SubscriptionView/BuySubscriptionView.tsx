@@ -215,7 +215,7 @@ const BuySubscriptionView = () => {
 
     return (
       <div style={{ textAlign: 'center' }}>
-        <p>Płatność...</p>
+        <p>Do zapłaty: {payment!.monthAmount * (selectedTariff!.roadPassRates[payment!.vehicleType] || 0)} zł</p>
         <Button onClick={makePayment}>Dokonaj finalizacji płatności</Button>
         <Button onClick={handleGoBack}>Powrót do zakupu abonamentu</Button>
       </div>
@@ -239,7 +239,7 @@ const BuySubscriptionView = () => {
             {tariffList.map((tl) => {
               return (
                 <Dropdown.Item key={tl.id} eventKey={tl.id}>
-                  {tl.roadIds.join(',')}
+                  {`${tl.name} dla dróg o id: ${tl.roadIds.join(',')}`}
                 </Dropdown.Item>
               );
             })}
